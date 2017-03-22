@@ -1,4 +1,32 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <elements/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11759" systemVersion="15G1217" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="CardObject" representedClassName="CardObject" syncable="YES" codeGenerationType="class">
+        <attribute name="answer" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="answerSpeaker" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="question" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="questionSpeaker" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rightCount" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="wrongCount" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="section" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SectionObject" inverseName="cards" inverseEntity="SectionObject" syncable="YES"/>
+    </entity>
+    <entity name="CharacterObject" representedClassName="CharacterObject" syncable="YES" codeGenerationType="class">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="script" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ScriptObject" inverseName="characters" inverseEntity="ScriptObject" syncable="YES"/>
+        <relationship name="sections" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="SectionObject" inverseName="character" inverseEntity="SectionObject" syncable="YES"/>
+    </entity>
+    <entity name="ScriptObject" representedClassName="ScriptObject" syncable="YES" codeGenerationType="class">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="characters" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="CharacterObject" inverseName="script" inverseEntity="CharacterObject" syncable="YES"/>
+    </entity>
+    <entity name="SectionObject" representedClassName="SectionObject" syncable="YES" codeGenerationType="class">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="cards" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="CardObject" inverseName="section" inverseEntity="CardObject" syncable="YES"/>
+        <relationship name="character" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CharacterObject" inverseName="sections" inverseEntity="CharacterObject" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="ScriptObject" positionX="-63" positionY="-18" width="128" height="75"/>
+        <element name="CharacterObject" positionX="-54" positionY="-9" width="128" height="90"/>
+        <element name="SectionObject" positionX="-36" positionY="9" width="128" height="90"/>
+        <element name="CardObject" positionX="-18" positionY="27" width="128" height="150"/>
+    </elements>
 </model>
