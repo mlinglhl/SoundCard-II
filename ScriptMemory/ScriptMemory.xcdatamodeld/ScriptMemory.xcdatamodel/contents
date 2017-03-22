@@ -3,6 +3,7 @@
     <entity name="CardObject" representedClassName="CardObject" syncable="YES" codeGenerationType="class">
         <attribute name="answer" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="answerSpeaker" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="index" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="question" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="questionSpeaker" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="rightCount" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -24,9 +25,9 @@
         <relationship name="character" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CharacterObject" inverseName="sections" inverseEntity="CharacterObject" syncable="YES"/>
     </entity>
     <elements>
-        <element name="ScriptObject" positionX="-63" positionY="-18" width="128" height="75"/>
+        <element name="CardObject" positionX="-18" positionY="27" width="128" height="165"/>
         <element name="CharacterObject" positionX="-54" positionY="-9" width="128" height="90"/>
+        <element name="ScriptObject" positionX="-63" positionY="-18" width="128" height="75"/>
         <element name="SectionObject" positionX="-36" positionY="9" width="128" height="90"/>
-        <element name="CardObject" positionX="-18" positionY="27" width="128" height="150"/>
     </elements>
 </model>

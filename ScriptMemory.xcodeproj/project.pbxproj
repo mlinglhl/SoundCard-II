@@ -19,6 +19,10 @@
 		893E75401E81FA0C00640065 /* ScriptManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893E753F1E81FA0C00640065 /* ScriptManager.swift */; };
 		893E75421E81FA4400640065 /* CoreDataExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893E75411E81FA4400640065 /* CoreDataExtensions.swift */; };
 		893E75561E820FCF00640065 /* HomeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893E75551E820FCF00640065 /* HomeTableViewController.swift */; };
+		893E75621E8305FA00640065 /* DownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893E75611E8305FA00640065 /* DownloadManager.swift */; };
+		893E75681E830AC000640065 /* DownloadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893E75671E830AC000640065 /* DownloadViewController.swift */; };
+		893E756A1E83100400640065 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893E75691E83100400640065 /* HomeViewController.swift */; };
+		893E756C1E83166200640065 /* MemoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893E756B1E83166200640065 /* MemoryViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,11 +43,15 @@
 		893E75441E81FAB100640065 /* CharacterObject+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CharacterObject+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		893E75451E81FAB100640065 /* SectionObject+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SectionObject+CoreDataClass.swift"; sourceTree = "<group>"; };
 		893E75461E81FAB100640065 /* SectionObject+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SectionObject+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		893E75471E81FAB100640065 /* CardObject+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CardObject+CoreDataClass.swift"; sourceTree = "<group>"; };
-		893E75481E81FAB100640065 /* CardObject+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CardObject+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		893E75491E81FAB100640065 /* ScriptObject+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ScriptObject+CoreDataClass.swift"; sourceTree = "<group>"; };
 		893E754A1E81FAB100640065 /* ScriptObject+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ScriptObject+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		893E75551E820FCF00640065 /* HomeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeTableViewController.swift; sourceTree = "<group>"; };
+		893E75611E8305FA00640065 /* DownloadManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadManager.swift; sourceTree = "<group>"; };
+		893E75631E8308DC00640065 /* CardObject+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CardObject+CoreDataClass.swift"; sourceTree = "<group>"; };
+		893E75641E8308DC00640065 /* CardObject+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CardObject+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		893E75671E830AC000640065 /* DownloadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadViewController.swift; sourceTree = "<group>"; };
+		893E75691E83100400640065 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		893E756B1E83166200640065 /* MemoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoryViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,12 +68,12 @@
 		893E74F61E8175A800640065 = {
 			isa = PBXGroup;
 			children = (
+				893E75631E8308DC00640065 /* CardObject+CoreDataClass.swift */,
+				893E75641E8308DC00640065 /* CardObject+CoreDataProperties.swift */,
 				893E75431E81FAB100640065 /* CharacterObject+CoreDataClass.swift */,
 				893E75441E81FAB100640065 /* CharacterObject+CoreDataProperties.swift */,
 				893E75451E81FAB100640065 /* SectionObject+CoreDataClass.swift */,
 				893E75461E81FAB100640065 /* SectionObject+CoreDataProperties.swift */,
-				893E75471E81FAB100640065 /* CardObject+CoreDataClass.swift */,
-				893E75481E81FAB100640065 /* CardObject+CoreDataProperties.swift */,
 				893E75491E81FAB100640065 /* ScriptObject+CoreDataClass.swift */,
 				893E754A1E81FAB100640065 /* ScriptObject+CoreDataProperties.swift */,
 				893E75411E81FA4400640065 /* CoreDataExtensions.swift */,
@@ -88,6 +96,10 @@
 			children = (
 				893E75021E8175A800640065 /* AppDelegate.swift */,
 				893E75551E820FCF00640065 /* HomeTableViewController.swift */,
+				893E75691E83100400640065 /* HomeViewController.swift */,
+				893E75611E8305FA00640065 /* DownloadManager.swift */,
+				893E75671E830AC000640065 /* DownloadViewController.swift */,
+				893E756B1E83166200640065 /* MemoryViewController.swift */,
 				893E753F1E81FA0C00640065 /* ScriptManager.swift */,
 				893E75391E81CAB600640065 /* ScriptDataSource.swift */,
 				893E753B1E81CAC600640065 /* CharacterDataSource.swift */,
@@ -174,14 +186,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				893E75281E81774200640065 /* DataManager.swift in Sources */,
+				893E75621E8305FA00640065 /* DownloadManager.swift in Sources */,
 				893E750B1E8175A800640065 /* ScriptMemory.xcdatamodeld in Sources */,
 				893E75421E81FA4400640065 /* CoreDataExtensions.swift in Sources */,
+				893E756C1E83166200640065 /* MemoryViewController.swift in Sources */,
 				893E753C1E81CAC600640065 /* CharacterDataSource.swift in Sources */,
 				893E75561E820FCF00640065 /* HomeTableViewController.swift in Sources */,
 				893E753E1E81CAD000640065 /* SectionDataSource.swift in Sources */,
+				893E75681E830AC000640065 /* DownloadViewController.swift in Sources */,
 				893E753A1E81CAB600640065 /* ScriptDataSource.swift in Sources */,
 				893E75401E81FA0C00640065 /* ScriptManager.swift in Sources */,
 				893E75031E8175A800640065 /* AppDelegate.swift in Sources */,
+				893E756A1E83100400640065 /* HomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -343,6 +359,7 @@
 				893E75161E8175A800640065 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
