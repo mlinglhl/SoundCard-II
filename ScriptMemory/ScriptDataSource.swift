@@ -23,7 +23,12 @@ class ScriptDataSource: RootDataSource {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        ScriptManager.sharedInstance.selection.scriptIndex = indexPath.row
+        let scriptManager = ScriptManager.sharedInstance
+        scriptManager.selection.scriptIndex = indexPath.row
+        scriptManager.selection.characterIndex = 0
+        scriptManager.selection.sectionIndex = 0
+        homeViewController.updateCharacterDataSource()
+        homeViewController.updateSectionDataSource()
         super.tableView(tableView, didSelectRowAt: indexPath)
     }
 }

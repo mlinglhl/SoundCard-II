@@ -10,7 +10,7 @@ import UIKit
 
 class RootDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     
-    var homeViewController: CollapseAllProtocol!
+    var homeViewController: UpdateDataProtocol!
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1

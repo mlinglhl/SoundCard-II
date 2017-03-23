@@ -12,11 +12,13 @@ protocol ReloadTableProtocol {
     func reloadTableView()
 }
 
-protocol CollapseAllProtocol {
+protocol UpdateDataProtocol {
+    func updateCharacterDataSource()
+    func updateSectionDataSource()
     func collapseAll()
 }
 
-class HomeTableViewController: UITableViewController, ReloadTableProtocol, CollapseAllProtocol {
+class HomeTableViewController: UITableViewController, ReloadTableProtocol, UpdateDataProtocol {
     struct CellHeight {
         var scriptHeight = 0
         var characterHeight = 0
@@ -114,8 +116,19 @@ class HomeTableViewController: UITableViewController, ReloadTableProtocol, Colla
     
     func updateDataSource() {
         scriptDataSource.scriptArray = scriptManager.scriptArray
+        updateCharacterDataSource()
+        updateSectionDataSource()
+    }
+    
+    func updateCharacterDataSource() {
         characterDataSource.characterArray = scriptManager.getCharacters()
+        characterTableView.reloadData()
+        sectionTableView.reloadData()
+    }
+    
+    func updateSectionDataSource() {
         sectionDataSource.sectionArray = scriptManager.getSections()
+        sectionTableView.reloadData()
     }
     
     func updateSectionTitles() {
