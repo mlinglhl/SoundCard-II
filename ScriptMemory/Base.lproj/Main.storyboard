@@ -259,10 +259,10 @@
             </objects>
             <point key="canvasLocation" x="1845.5999999999999" y="67.916041979010501"/>
         </scene>
-        <!--View Controller-->
+        <!--Memory View Controller-->
         <scene sceneID="kXN-06-clS">
             <objects>
-                <viewController id="BQa-SC-UYg" sceneMemberID="viewController">
+                <viewController id="BQa-SC-UYg" customClass="MemoryViewController" customModule="ScriptMemory" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="DMz-9U-qVp"/>
                         <viewControllerLayoutGuide type="bottom" id="J37-Ub-Hpa"/>
@@ -279,21 +279,19 @@
                                         <integer key="value" value="8"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="acceptAnswer:" destination="BQa-SC-UYg" eventType="touchUpInside" id="XWT-f4-cn1"/>
+                                </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hk4-e3-M9J">
                                 <rect key="frame" x="0.0" y="64" width="375" height="267"/>
                                 <subviews>
                                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GLf-Sh-Ud5">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="267"/>
+                                        <rect key="frame" x="0.0" y="37" width="375" height="230"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="QuestionSpeaker" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ITU-bW-DjM">
-                                                <rect key="frame" x="8" y="8" width="131.5" height="21"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Question" lineBreakMode="wordWrap" numberOfLines="0" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Snt-fR-L3S">
-                                                <rect key="frame" x="8" y="37" width="69" height="20.5"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="wordWrap" numberOfLines="0" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Snt-fR-L3S">
+                                                <rect key="frame" x="8" y="0.0" width="367" height="20.5"/>
+                                                <mutableString key="text">Question Ques Question Question Question Question Question Question Question Question tion Question Question Question Question Question Question Question Question Question Question Question Question Question Question Question Question Question Question Question Question Question Question Question Question Question Question Question Question Question Question Question Question Question Question Question Question Question Question Question Question Question Question Question Question Question Question Question Question Question Question Question Question Question Question Question Question</mutableString>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -301,18 +299,25 @@
                                         </subviews>
                                         <constraints>
                                             <constraint firstItem="Snt-fR-L3S" firstAttribute="leading" secondItem="GLf-Sh-Ud5" secondAttribute="leading" constant="8" id="FPe-FE-ISM"/>
-                                            <constraint firstItem="ITU-bW-DjM" firstAttribute="top" secondItem="GLf-Sh-Ud5" secondAttribute="top" constant="8" id="GmJ-lE-bAq"/>
-                                            <constraint firstItem="Snt-fR-L3S" firstAttribute="top" secondItem="ITU-bW-DjM" secondAttribute="bottom" constant="8" id="las-pk-GND"/>
-                                            <constraint firstItem="ITU-bW-DjM" firstAttribute="leading" secondItem="GLf-Sh-Ud5" secondAttribute="leading" constant="8" id="nHq-be-9aP"/>
+                                            <constraint firstItem="Snt-fR-L3S" firstAttribute="top" secondItem="GLf-Sh-Ud5" secondAttribute="top" id="Fix-ku-WbV"/>
                                         </constraints>
                                     </scrollView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="QuestionSpeaker" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ITU-bW-DjM">
+                                        <rect key="frame" x="8" y="8" width="131.5" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="GLf-Sh-Ud5" firstAttribute="leading" secondItem="hk4-e3-M9J" secondAttribute="leading" id="7HM-oj-IA0"/>
                                     <constraint firstAttribute="trailing" secondItem="GLf-Sh-Ud5" secondAttribute="trailing" id="Z0v-4A-Nj7"/>
                                     <constraint firstAttribute="bottom" secondItem="GLf-Sh-Ud5" secondAttribute="bottom" id="ZKS-Pi-wT6"/>
-                                    <constraint firstItem="GLf-Sh-Ud5" firstAttribute="top" secondItem="hk4-e3-M9J" secondAttribute="top" id="dzz-G8-WnH"/>
+                                    <constraint firstItem="GLf-Sh-Ud5" firstAttribute="top" secondItem="ITU-bW-DjM" secondAttribute="bottom" constant="8" id="gUE-7F-3ga"/>
+                                    <constraint firstItem="ITU-bW-DjM" firstAttribute="leading" secondItem="hk4-e3-M9J" secondAttribute="leading" constant="8" id="hNn-ub-fbo"/>
+                                    <constraint firstItem="ITU-bW-DjM" firstAttribute="top" secondItem="hk4-e3-M9J" secondAttribute="top" constant="8" id="sQm-Dr-Gxn"/>
+                                    <constraint firstAttribute="trailing" secondItem="Snt-fR-L3S" secondAttribute="trailing" id="vsd-Ny-lLn"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Ag-Yk-NMc">
@@ -358,6 +363,14 @@
                             <constraint firstItem="hk4-e3-M9J" firstAttribute="height" secondItem="yuZ-cs-7yY" secondAttribute="height" multiplier="0.4" id="ywZ-DO-H7I"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="acceptAnswerButton" destination="yaJ-T8-aAY" id="c3g-VN-RPW"/>
+                        <outlet property="answerLabel" destination="yiF-Kr-psu" id="PnK-Pw-hNu"/>
+                        <outlet property="answerScrollView" destination="0vh-ef-Rnf" id="nFk-SD-QmJ"/>
+                        <outlet property="questionLabel" destination="Snt-fR-L3S" id="zNr-UK-Ygf"/>
+                        <outlet property="questionScrollView" destination="GLf-Sh-Ud5" id="Ld3-Yp-1f3"/>
+                        <outlet property="questionSpeakerLabel" destination="ITU-bW-DjM" id="3MO-a9-irf"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iEW-O9-S5M" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

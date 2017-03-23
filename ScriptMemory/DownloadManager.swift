@@ -54,7 +54,7 @@ class DownloadManager: NSObject {
     let dataManager = DataManager.sharedInstance
     var cardArray = [Card]()
     var cardHolder = Card(question: "", answer: "", section: "", characterIndex: 0, questionSpeaker: "", answerSpeaker: "", index: 9999)
-    var previousCard = Card(question: "", answer: "First line", section: "", characterIndex: 0, questionSpeaker: "", answerSpeaker: "", index: 9999)
+    var previousCard = Card(question: "", answer: "Scene start", section: "", characterIndex: 0, questionSpeaker: "", answerSpeaker: "", index: 9999)
     var scriptName = ""
     var scriptType = ""
     var categories = NSMutableOrderedSet()
@@ -88,7 +88,7 @@ class DownloadManager: NSObject {
                     section = self.previousCard.section
                 }
                 if section != self.previousCard.section {
-                    self.previousCard = Card(question: "", answer: "First line", section: "", characterIndex: 0, questionSpeaker: "", answerSpeaker: "", index: 9999)
+                    self.previousCard = Card(question: "", answer: "Scene start", section: "", characterIndex: 0, questionSpeaker: "", answerSpeaker: "", index: 9999)
                 }
                     if dictCharacter == "" {
                         dictCharacter = self.previousCard.answerSpeaker
