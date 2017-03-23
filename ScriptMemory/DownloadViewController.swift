@@ -9,7 +9,9 @@
 import UIKit
 
 class DownloadViewController: UIViewController {
-
+    
+    var homeViewController: ReloadTableProtocol!
+    
     @IBOutlet weak var urlTextField: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,6 +22,7 @@ class DownloadViewController: UIViewController {
     @IBAction func createCards(_ sender: UIButton) {
         let downloadManager = DownloadManager()
         downloadManager.makeCardsWithUrl(self.urlTextField.text ?? "", completion: {
+            self.homeViewController.reloadTableView()
             let _ = self.navigationController?.popViewController(animated: true)
         })
     }

@@ -8,26 +8,73 @@
 
 import UIKit
 
-class HomeTableViewController: UITableViewController {
+protocol ReloadTableProtocol {
+    func reloadTableView()
+}
+
+protocol CollapseAllProtocol {
+    func collapseAll()
+}
+
+class HomeTableViewController: UITableViewController, ReloadTableProtocol, CollapseAllProtocol {
     struct CellHeight {
         var scriptHeight = 0
         var characterHeight = 0
         var sectionHeight = 0
     }
     
+    
+    @IBOutlet weak var selectedScriptLabel: UILabel!
+    @IBOutlet weak var selectedCharacterLabel: UILabel!
+    @IBOutlet weak var selectedSectionLabel: UILabel!
+    
+    let scriptManager = ScriptManager.sharedInstance
     let scriptDataSource = ScriptDataSource()
     let characterDataSource = CharacterDataSource()
     let sectionDataSource = SectionDataSource()
-    let cellHeight = CellHeight()
+    var cellHeight = CellHeight()
     @IBOutlet weak var characterTableView: UITableView!
     @IBOutlet weak var scriptTableView: UITableView!
     @IBOutlet weak var sectionTableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        scriptTableView.dataSource = scriptDataSource
-        characterTableView.dataSource = characterDataSource
-        sectionTableView.dataSource = sectionDataSource
+        setUpDataSources()
         tableView.contentInset = UIEdgeInsetsMake(20, 0, 0, 0)
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.beginUpdates()
+        switch indexPath.section {
+        case 0:
+            let height = cellHeight.scriptHeight
+            cellHeight.scriptHeight = adjustHeight(height, count: scriptDataSource.scriptArray.count)
+            break
+        case 1:
+            let height = cellHeight.characterHeight
+            cellHeight.characterHeight = adjustHeight(height, count: characterDataSource.characterArray.count)
+            break
+        case 2:
+            let height = cellHeight.sectionHeight
+            cellHeight.sectionHeight = adjustHeight(height, count: sectionDataSource.sectionArray.count)
+            break
+        default:
+            break
+        }
+        tableView.endUpdates()
+    }
+    
+    func adjustHeight (_ height: Int, count: Int) -> Int {
+        let newHeight = 25 * count
+        return height == newHeight ? 0 : newHeight
+    }
+    
+    func collapseAll() {
+        tableView.beginUpdates()
+        updateSectionTitles()
+        cellHeight.scriptHeight = 0
+        cellHeight.characterHeight = 0
+        cellHeight.sectionHeight = 0
+        tableView.endUpdates()
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -45,4 +92,55 @@ class HomeTableViewController: UITableViewController {
         }
         return 25
     }
+    
+    func reloadTableView() {
+        tableView.reloadData()
+    }
+    
+    func setUpDataSources() {
+        scriptManager.fetchScripts()
+        scriptTableView.dataSource = scriptDataSource
+        scriptTableView.delegate = scriptDataSource
+        scriptDataSource.homeViewController = self
+        characterTableView.dataSource = characterDataSource
+        characterTableView.delegate = characterDataSource
+        characterDataSource.homeViewController = self
+        sectionTableView.dataSource = sectionDataSource
+        sectionTableView.delegate = sectionDataSource
+        sectionDataSource.homeViewController = self
+        updateDataSource()
+        updateSectionTitles()
+    }
+    
+    func updateDataSource() {
+        scriptDataSource.scriptArray = scriptManager.scriptArray
+        characterDataSource.characterArray = scriptManager.getCharacters()
+        sectionDataSource.sectionArray = scriptManager.getSections()
+    }
+    
+    func updateSectionTitles() {
+        selectedScriptLabel.text = "No scripts found"
+        selectedCharacterLabel.text = "No characters found"
+        selectedSectionLabel.text = "No sections found"
+        
+        if let script = scriptManager.getCurrentScript() {
+            selectedScriptLabel.text = script.name
+        }
+        
+        if let character = scriptManager.getCurrentCharacter() {
+            selectedCharacterLabel.text = character.name
+        }
+        
+        if let section = scriptManager.getCurrentSection() {
+            selectedSectionLabel.text = section.name
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "DownloadViewController" {
+            let dvc = segue.destination as! DownloadViewController
+            dvc.homeViewController = self
+        }
+    }
+    
 }

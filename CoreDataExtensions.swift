@@ -8,7 +8,7 @@
 //
 
 extension ScriptObject {
-    func CharacterObjectsArray() -> [CharacterObject] {
+    func characterObjectsArray() -> [CharacterObject] {
         let ordered = self.characters
         let anyArray = ordered?.array
         if let castCategory = anyArray as? [CharacterObject] {

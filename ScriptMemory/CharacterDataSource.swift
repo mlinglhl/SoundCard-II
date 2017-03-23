@@ -8,18 +8,22 @@
 
 import UIKit
 
-class CharacterDataSource: NSObject, UITableViewDataSource {
+class CharacterDataSource: RootDataSource {
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+    var characterArray = [CharacterObject]()
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return characterArray.count
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        cell.textLabel?.text = characterArray[indexPath.row].name
         return cell
+    }
+
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        ScriptManager.sharedInstance.selection.characterIndex = indexPath.row
+        super.tableView(tableView, didSelectRowAt: indexPath)
     }
 }
