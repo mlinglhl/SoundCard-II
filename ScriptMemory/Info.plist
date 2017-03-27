@@ -2,9 +2,11 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>Your microphone will be needed to use text to speech.</string>
     <key>NSSpeechRecognitionUsageDescription</key>
-    <string>This lets you use speech to text for your responses.</string>
-	<key>CFBundleDevelopmentRegion</key>
+    <string>This is needed to use text to speech.</string>
+    <key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>

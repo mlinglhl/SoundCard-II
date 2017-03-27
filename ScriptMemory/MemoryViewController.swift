@@ -14,26 +14,30 @@ class MemoryViewController: UIViewController, SFSpeechRecognizerDelegate {
     @IBOutlet weak var currentProgressView: UIProgressView!
     @IBOutlet weak var acceptAnswerButton: UIButton!
     
+    @IBOutlet weak var answerTextViewLeadingAnchor: NSLayoutConstraint!
+    @IBOutlet weak var answerTextView: UITextView!
+    @IBOutlet weak var speechToTextTextView: UITextView!
     @IBOutlet weak var speechToTextButton: UIButton!
     private let speechRecognizer = SFSpeechRecognizer(locale: Locale.init(identifier: "en-US"))!
     private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
     private var recognitionTask: SFSpeechRecognitionTask?
     private let audioEngine = AVAudioEngine()
-
+    
     @IBOutlet weak var questionLabel: UILabel!
     @IBOutlet weak var questionSpeakerLabel: UILabel!
     @IBOutlet weak var questionScrollView: UIScrollView!
-    
-    @IBOutlet weak var answerLabel: UILabel!
-    @IBOutlet weak var answerScrollView: UIScrollView!
     
     let scriptManager = ScriptManager.sharedInstance
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setUp()
+    }
+    
+    func setUp() {
         scriptManager.startSession()
-        currentProgressView.progress = 0.0
         updateLabels()
+        currentProgressView.progress = 0.0
         speechRecognizer.delegate = self
         SFSpeechRecognizer.requestAuthorization { (authStatus) in
             
@@ -53,9 +57,30 @@ class MemoryViewController: UIViewController, SFSpeechRecognizerDelegate {
             }
         }
         acceptAnswerButton.setTitle(" Check answer ", for: .normal)
+        self.answerTextViewLeadingAnchor.constant = self.view.frame.width
     }
     
     @IBAction func acceptAnswer(_ sender: UIButton) {
+        if toggleButtonState() {
+            speechToTextTextView.text = ""
+            answerTextView.isHidden = true
+            nextQuestion()
+        }
+        answerTextView.isHidden = false
+    }
+    
+    func toggleButtonState() -> Bool{
+        if acceptAnswerButton.title(for: .normal) != " Next question " {
+            acceptAnswerButton.setTitle(" Next question ", for: .normal)
+            self.answerTextViewLeadingAnchor.constant = self.speechToTextTextView.frame.origin.x
+            return false
+        }
+        acceptAnswerButton.setTitle(" Check answer ", for: .normal)
+        return true
+    }
+    
+    func nextQuestion() {
+        answerTextViewLeadingAnchor.constant = self.view.frame.width
         scriptManager.session.cardIndex += 1
         currentProgressView.progress = Float(scriptManager.session.cardIndex) / Float(scriptManager.session.deck.count)
         updateLabels()
@@ -63,18 +88,89 @@ class MemoryViewController: UIViewController, SFSpeechRecognizerDelegate {
     
     override func viewDidLayoutSubviews() {
         questionScrollView.contentSize = CGSize(width: questionLabel.frame.width, height: questionLabel.frame.height + 10)
-        answerScrollView.contentSize = CGSize(width: answerLabel.frame.width, height: answerLabel.frame.height + 10)
     }
     
-    @IBAction func toggleSpeechToText(_ sender: UIButton) {
+    @IBAction func dismissKeybord(_ sender: UITapGestureRecognizer) {
+        view.endEditing(true)
     }
+    
     func updateLabels() {
         let deck = scriptManager.session.deck
         let index = scriptManager.session.cardIndex
         if index < deck.count {
             questionSpeakerLabel.text = deck[index].questionSpeaker
             questionLabel.text = deck[index].question
-            answerLabel.text = deck[index].answer
+            answerTextView.text = deck[index].answer
         }
+    }
+    
+    @IBAction func toggleSpeechToText(_ sender: UIButton) {
+        toggleSpeechToText()
+    }
+    
+    func toggleSpeechToText() {
+        if endSpeechToText() {
+            return
+        }
+        let audioSession = AVAudioSession.sharedInstance()
+        do {
+            try audioSession.setCategory(AVAudioSessionCategoryRecord)
+            try audioSession.setMode(AVAudioSessionModeMeasurement)
+            try audioSession.setActive(true, with: .notifyOthersOnDeactivation)
+        } catch {
+            print("audioSession properties weren't set because of an error.")
+        }
+        
+        recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
+        
+        guard let inputNode = audioEngine.inputNode else {
+            fatalError("Audio engine has no input node")
+        }
+        
+        guard let recognitionRequest = recognitionRequest else {
+            fatalError("Unable to create an SFSpeechAudioBufferRecognitionRequest object")
+        }
+        
+        recognitionRequest.shouldReportPartialResults = true
+        
+        recognitionTask = speechRecognizer.recognitionTask(with: recognitionRequest, resultHandler: { (result, error) in
+            
+            var isFinal = false
+            
+            if result != nil {
+                self.speechToTextTextView.text = result?.bestTranscription.formattedString
+                isFinal = (result?.isFinal)!
+            }
+            
+            if error != nil || isFinal {
+                self.audioEngine.stop()
+                inputNode.removeTap(onBus: 0)
+                
+                self.recognitionRequest = nil
+                self.recognitionTask = nil
+            }
+        })
+        
+        let recordingFormat = inputNode.outputFormat(forBus: 0)
+        inputNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { (buffer, when) in
+            self.recognitionRequest?.append(buffer)
+        }
+        
+        audioEngine.prepare()
+        
+        do {
+            try audioEngine.start()
+        } catch {
+            print("audioEngine couldn't start because of an error.")
+        }
+    }
+    
+    func endSpeechToText() -> Bool {
+        if recognitionTask != nil {
+            recognitionTask?.cancel()
+            recognitionTask = nil
+            return true
+        }
+        return false
     }
 }

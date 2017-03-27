@@ -272,9 +272,9 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yaJ-T8-aAY">
-                                <rect key="frame" x="160" y="629" width="54" height="30"/>
+                                <rect key="frame" x="131.5" y="629" width="111" height="30"/>
                                 <color key="backgroundColor" red="0.21217752467097906" green="0.73021555364682489" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title=" Button ">
+                                <state key="normal" title=" Accept Answer ">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
@@ -304,8 +304,8 @@
                                             <constraint firstItem="Snt-fR-L3S" firstAttribute="top" secondItem="GLf-Sh-Ud5" secondAttribute="top" id="Fix-ku-WbV"/>
                                         </constraints>
                                     </scrollView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="QuestionSpeaker" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ITU-bW-DjM">
-                                        <rect key="frame" x="8" y="8" width="132" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="QuestionSpeaker" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ITU-bW-DjM">
+                                        <rect key="frame" x="8" y="8" width="359" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -314,6 +314,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="GLf-Sh-Ud5" firstAttribute="leading" secondItem="hk4-e3-M9J" secondAttribute="leading" id="7HM-oj-IA0"/>
+                                    <constraint firstAttribute="trailing" secondItem="ITU-bW-DjM" secondAttribute="trailing" constant="8" id="PHh-hv-3xK"/>
                                     <constraint firstAttribute="trailing" secondItem="GLf-Sh-Ud5" secondAttribute="trailing" id="Z0v-4A-Nj7"/>
                                     <constraint firstAttribute="bottom" secondItem="GLf-Sh-Ud5" secondAttribute="bottom" id="ZKS-Pi-wT6"/>
                                     <constraint firstItem="GLf-Sh-Ud5" firstAttribute="top" secondItem="ITU-bW-DjM" secondAttribute="bottom" constant="8" id="gUE-7F-3ga"/>
@@ -325,51 +326,45 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Ag-Yk-NMc">
                                 <rect key="frame" x="0.0" y="349" width="375" height="280"/>
                                 <subviews>
-                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0vh-ef-Rnf">
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="1gv-kr-irk">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="280"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Answer" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yiF-Kr-psu">
-                                                <rect key="frame" x="8" y="0.0" width="359" height="21"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="1gv-kr-irk">
-                                                <rect key="frame" x="8" y="0.0" width="359" height="280"/>
-                                                <color key="backgroundColor" red="0.60000002384185791" green="0.40000000596046448" blue="0.20000000298023224" alpha="1" colorSpace="calibratedRGB"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                        <integer key="value" value="8"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                </userDefinedRuntimeAttributes>
-                                            </textView>
-                                        </subviews>
-                                        <constraints>
-                                            <constraint firstItem="1gv-kr-irk" firstAttribute="width" secondItem="yiF-Kr-psu" secondAttribute="width" id="2Bd-4L-udh"/>
-                                            <constraint firstItem="yiF-Kr-psu" firstAttribute="leading" secondItem="0vh-ef-Rnf" secondAttribute="leading" constant="8" id="AO8-nT-yXc"/>
-                                            <constraint firstItem="yiF-Kr-psu" firstAttribute="top" secondItem="0vh-ef-Rnf" secondAttribute="top" id="blo-tp-99g"/>
-                                            <constraint firstItem="1gv-kr-irk" firstAttribute="centerX" secondItem="yiF-Kr-psu" secondAttribute="centerX" id="miN-kM-Qyx"/>
-                                        </constraints>
-                                    </scrollView>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <integer key="value" value="8"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </textView>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="9c6-gg-mYg">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="280"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <integer key="value" value="8"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </textView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="0vh-ef-Rnf" secondAttribute="trailing" id="0rN-VI-MhU"/>
-                                    <constraint firstItem="1gv-kr-irk" firstAttribute="top" secondItem="1Ag-Yk-NMc" secondAttribute="top" id="83S-ve-XFL"/>
-                                    <constraint firstAttribute="bottom" secondItem="1gv-kr-irk" secondAttribute="bottom" id="HAB-4s-eHB"/>
-                                    <constraint firstAttribute="bottom" secondItem="0vh-ef-Rnf" secondAttribute="bottom" id="MDx-93-Kpu"/>
-                                    <constraint firstItem="0vh-ef-Rnf" firstAttribute="top" secondItem="1Ag-Yk-NMc" secondAttribute="top" id="cPC-bz-MxH"/>
-                                    <constraint firstAttribute="trailing" secondItem="yiF-Kr-psu" secondAttribute="trailing" constant="8" id="tgv-iR-rdX"/>
-                                    <constraint firstItem="0vh-ef-Rnf" firstAttribute="leading" secondItem="1Ag-Yk-NMc" secondAttribute="leading" id="yA6-Ne-gby"/>
+                                    <constraint firstAttribute="bottom" secondItem="1gv-kr-irk" secondAttribute="bottom" id="23z-MM-4xK"/>
+                                    <constraint firstItem="9c6-gg-mYg" firstAttribute="height" secondItem="1gv-kr-irk" secondAttribute="height" id="3F5-Za-wrZ"/>
+                                    <constraint firstItem="9c6-gg-mYg" firstAttribute="width" secondItem="1gv-kr-irk" secondAttribute="width" id="A4Y-1Y-rdD"/>
+                                    <constraint firstItem="1gv-kr-irk" firstAttribute="leading" secondItem="1Ag-Yk-NMc" secondAttribute="leading" id="Ble-C8-Beo"/>
+                                    <constraint firstItem="1gv-kr-irk" firstAttribute="top" secondItem="1Ag-Yk-NMc" secondAttribute="top" id="PZj-95-avR"/>
+                                    <constraint firstAttribute="trailing" secondItem="1gv-kr-irk" secondAttribute="trailing" id="Yj7-FW-RyK"/>
+                                    <constraint firstItem="9c6-gg-mYg" firstAttribute="leading" secondItem="1Ag-Yk-NMc" secondAttribute="leading" id="YxT-Uu-C50"/>
+                                    <constraint firstItem="9c6-gg-mYg" firstAttribute="top" secondItem="1Ag-Yk-NMc" secondAttribute="top" id="wR9-Ls-gaz"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="crA-rq-La6">
                                 <rect key="frame" x="16" y="629" width="106" height="30"/>
                                 <state key="normal" title="Speech To Text"/>
                                 <connections>
-                                    <action selector="toggleSpeechToText:" destination="BQa-SC-UYg" eventType="touchUpInside" id="JRF-qB-ZZz"/>
+                                    <action selector="toggleSpeechToText:" destination="BQa-SC-UYg" eventType="touchUpInside" id="nlc-MP-33J"/>
                                 </connections>
                             </button>
                             <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="kja-Xz-sI2">
@@ -377,6 +372,7 @@
                             </progressView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="kja-Xz-sI2" secondAttribute="trailing" constant="8" id="1Ta-AU-adc"/>
                             <constraint firstItem="J37-Ub-Hpa" firstAttribute="top" secondItem="yaJ-T8-aAY" secondAttribute="bottom" constant="8" id="7Nf-ae-Db0"/>
@@ -394,19 +390,28 @@
                             <constraint firstItem="hk4-e3-M9J" firstAttribute="height" secondItem="yuZ-cs-7yY" secondAttribute="height" multiplier="0.4" id="ywZ-DO-H7I"/>
                             <constraint firstItem="J37-Ub-Hpa" firstAttribute="top" secondItem="crA-rq-La6" secondAttribute="bottom" constant="8" id="zKG-II-bzW"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="2Bz-N8-hTV" appends="YES" id="h2a-7Q-qrc"/>
+                        </connections>
                     </view>
                     <connections>
                         <outlet property="acceptAnswerButton" destination="yaJ-T8-aAY" id="c3g-VN-RPW"/>
-                        <outlet property="answerLabel" destination="yiF-Kr-psu" id="PnK-Pw-hNu"/>
-                        <outlet property="answerScrollView" destination="0vh-ef-Rnf" id="nFk-SD-QmJ"/>
+                        <outlet property="answerTextView" destination="9c6-gg-mYg" id="uPW-UJ-Dwi"/>
+                        <outlet property="answerTextViewLeadingAnchor" destination="YxT-Uu-C50" id="CVs-Qa-sIT"/>
                         <outlet property="currentProgressView" destination="kja-Xz-sI2" id="CqH-GP-WmO"/>
                         <outlet property="questionLabel" destination="Snt-fR-L3S" id="zNr-UK-Ygf"/>
                         <outlet property="questionScrollView" destination="GLf-Sh-Ud5" id="Ld3-Yp-1f3"/>
                         <outlet property="questionSpeakerLabel" destination="ITU-bW-DjM" id="3MO-a9-irf"/>
                         <outlet property="speechToTextButton" destination="crA-rq-La6" id="bd6-cU-QmJ"/>
+                        <outlet property="speechToTextTextView" destination="1gv-kr-irk" id="0P2-bY-ytZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iEW-O9-S5M" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="2Bz-N8-hTV">
+                    <connections>
+                        <action selector="dismissKeybord:" destination="BQa-SC-UYg" id="hf0-km-1dg"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1076" y="764.16791604197908"/>
         </scene>
