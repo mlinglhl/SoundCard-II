@@ -90,36 +90,48 @@ class MemoryViewController: UIViewController, SFSpeechRecognizerDelegate {
     
     func checkAnswer() {
         let answer = scriptManager.session.deck[scriptManager.session.cardIndex].answer
+        let enteredWords = speechToTextTextView.text
         let rightWords = checkRightWords()
         let answerString = NSMutableAttributedString(string: answer! as String)
         answerString.addAttribute(NSForegroundColorAttributeName, value: UIColor.red, range: NSRange(location: 0, length: answer!.characters.count))
-        for key in rightWords.keys {
-            answerString.addAttribute(NSForegroundColorAttributeName, value: UIColor.black, range: NSRange(location:key,length:rightWords[key]!))
+        let enteredString = NSMutableAttributedString(string: enteredWords! as String)
+        enteredString.addAttribute(NSForegroundColorAttributeName, value: UIColor.red, range: NSRange(location: 0, length: enteredWords!.characters.count))
+        for key in rightWords[0].keys {
+            answerString.addAttribute(NSForegroundColorAttributeName, value: UIColor.black, range: NSRange(location:key,length:rightWords[0][key]!))
+        }
+        for key in rightWords[1].keys {
+            enteredString.addAttribute(NSForegroundColorAttributeName, value: UIColor.black, range: NSRange(location:key,length:rightWords[1][key]!))
         }
         answerTextView.attributedText = answerString
+        speechToTextTextView.attributedText = enteredString
     }
     
-    func checkRightWords() -> Dictionary <Int, Int> {
+    func checkRightWords() -> [Dictionary <Int, Int>] {
         let enteredWords = speechToTextTextView.text
         let answer = scriptManager.session.deck[scriptManager.session.cardIndex].answer
         let answerArray = answer!.components(separatedBy: " ")
         let enteredWordsArray = enteredWords!.components(separatedBy: " ")
-        var rightDictionary = Dictionary<Int, Int>()
+        var rightAnswerDictionary = Dictionary<Int, Int>()
+        var rightEnteredDictionary = Dictionary<Int, Int>()
         for index in 0...answerArray.count {
             if enteredWordsArray.count > index {
                 if answerArray[index] == enteredWordsArray[index] {
-                    var rangeStart = 0
+                    var answerRangeStart = 0
+                    var enteredRangeStart = 0
                     if index > 0 {
                         for rangeIndex in 0..<index {
-                            rangeStart += answerArray[rangeIndex].characters.count + 1
+                            answerRangeStart += answerArray[rangeIndex].characters.count + 1
+                            enteredRangeStart += enteredWordsArray[rangeIndex].characters.count + 1
                         }
                     }
-                    let length = answerArray[index].characters.count
-                    rightDictionary.updateValue(length, forKey: rangeStart)
+                    let answerLength = answerArray[index].characters.count
+                    let enteredLength = enteredWordsArray[index].characters.count
+                    rightAnswerDictionary.updateValue(answerLength, forKey: answerRangeStart)
+                    rightEnteredDictionary.updateValue(enteredLength, forKey: enteredRangeStart)
                 }
             }
         }
-        return rightDictionary
+        return [rightAnswerDictionary, rightEnteredDictionary]
     }
     
     func toggleButtonState() -> Bool{
