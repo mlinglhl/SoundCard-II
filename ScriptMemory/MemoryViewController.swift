@@ -14,7 +14,13 @@ class MemoryViewController: UIViewController, SFSpeechRecognizerDelegate {
     @IBOutlet weak var currentProgressView: UIProgressView!
     @IBOutlet weak var acceptAnswerButton: UIButton!
     
+    @IBOutlet weak var speechToTextLeadingAnchor: NSLayoutConstraint!
+
+    @IBOutlet weak var questionSpeakerHeightAnchor: NSLayoutConstraint!
+    
+    @IBOutlet weak var questionSpeakerLabelTopAnchor: NSLayoutConstraint!
     @IBOutlet weak var answerTextViewLeadingAnchor: NSLayoutConstraint!
+    
     @IBOutlet weak var answerTextView: UITextView!
     @IBOutlet weak var speechToTextTextView: UITextView!
     @IBOutlet weak var speechToTextButton: UIButton!
@@ -34,10 +40,24 @@ class MemoryViewController: UIViewController, SFSpeechRecognizerDelegate {
         setUp()
     }
     
+//MARK: SetUp Methods
     func setUp() {
+        acceptAnswerButton.setTitle(" Check answer ", for: .normal)
+        
+        //sets push to talk button position
+        let buttonStart = acceptAnswerButton.frame.origin.x
+        speechToTextLeadingAnchor.constant = buttonStart/2 - speechToTextButton.frame.width/2
+
         scriptManager.startSession()
         updateLabels()
         currentProgressView.progress = 0.0
+
+        setUpPushToTalk()
+
+        self.answerTextViewLeadingAnchor.constant = self.view.frame.width
+    }
+    
+    func setUpPushToTalk() {
         speechRecognizer.delegate = self
         SFSpeechRecognizer.requestAuthorization { (authStatus) in
             
@@ -56,8 +76,6 @@ class MemoryViewController: UIViewController, SFSpeechRecognizerDelegate {
             OperationQueue.main.addOperation() {
             }
         }
-        acceptAnswerButton.setTitle(" Check answer ", for: .normal)
-        self.answerTextViewLeadingAnchor.constant = self.view.frame.width
     }
     
     @IBAction func acceptAnswer(_ sender: UIButton) {
@@ -99,6 +117,12 @@ class MemoryViewController: UIViewController, SFSpeechRecognizerDelegate {
         let index = scriptManager.session.cardIndex
         if index < deck.count {
             questionSpeakerLabel.text = deck[index].questionSpeaker
+            questionSpeakerLabelTopAnchor.constant = 8
+            questionSpeakerHeightAnchor.constant = 21
+            if questionSpeakerLabel.text == "" {
+                questionSpeakerHeightAnchor.constant = 0
+                questionSpeakerLabelTopAnchor.constant = 0
+            }
             questionLabel.text = deck[index].question
             answerTextView.text = deck[index].answer
         }
