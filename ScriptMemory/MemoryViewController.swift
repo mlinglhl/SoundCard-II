@@ -43,6 +43,8 @@ class MemoryViewController: UIViewController, SFSpeechRecognizerDelegate {
 //MARK: SetUp Methods
     func setUp() {
         acceptAnswerButton.setTitle(" Check answer ", for: .normal)
+        answerTextView.isHidden = true
+        currentProgressView.progress = 0.0
         
         //sets push to talk button position
         let buttonStart = acceptAnswerButton.frame.origin.x
@@ -50,11 +52,9 @@ class MemoryViewController: UIViewController, SFSpeechRecognizerDelegate {
 
         scriptManager.startSession()
         updateLabels()
-        currentProgressView.progress = 0.0
 
         setUpPushToTalk()
-
-        self.answerTextViewLeadingAnchor.constant = self.view.frame.width
+//        self.answerTextViewLeadingAnchor.constant = self.view.frame.width
     }
     
     func setUpPushToTalk() {

@@ -41,7 +41,6 @@ class HomeTableViewController: UITableViewController, ReloadTableProtocol, Updat
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpDataSources()
-        tableView.contentInset = UIEdgeInsetsMake(20, 0, 0, 0)
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -96,11 +95,13 @@ class HomeTableViewController: UITableViewController, ReloadTableProtocol, Updat
     }
     
     func reloadTableView() {
+        scriptManager.fetchScripts()
+        updateDataSource()
+        updateSectionTitles()
         tableView.reloadData()
     }
     
     func setUpDataSources() {
-        scriptManager.fetchScripts()
         scriptTableView.dataSource = scriptDataSource
         scriptTableView.delegate = scriptDataSource
         scriptDataSource.homeViewController = self
@@ -110,12 +111,14 @@ class HomeTableViewController: UITableViewController, ReloadTableProtocol, Updat
         sectionTableView.dataSource = sectionDataSource
         sectionTableView.delegate = sectionDataSource
         sectionDataSource.homeViewController = self
+        scriptManager.fetchScripts()
         updateDataSource()
         updateSectionTitles()
     }
     
     func updateDataSource() {
         scriptDataSource.scriptArray = scriptManager.scriptArray
+        scriptTableView.reloadData()
         updateCharacterDataSource()
         updateSectionDataSource()
     }
