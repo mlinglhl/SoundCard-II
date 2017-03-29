@@ -82,26 +82,40 @@ class MemoryViewController: UIViewController, SFSpeechRecognizerDelegate {
         if toggleButtonState() {
             speechToTextTextView.text = ""
             answerTextView.isHidden = true
+            speechToTextTextView.isEditable = true
+            speechToTextButton.isEnabled = true
             nextQuestion()
+            return
         }
         checkAnswer()
         answerTextView.isHidden = false
+        speechToTextTextView.isEditable = false
+        speechToTextButton.isEnabled = false
     }
     
     func checkAnswer() {
         let answer = scriptManager.session.deck[scriptManager.session.cardIndex].answer
         let enteredWords = speechToTextTextView.text
         let rightWords = checkRightWords()
+        let defaultAttributes = [
+            NSFontAttributeName: UIFont(name: "Arial", size: 17.0)!,
+            NSForegroundColorAttributeName: UIColor.red
+        ]
         let answerString = NSMutableAttributedString(string: answer! as String)
-        answerString.addAttribute(NSForegroundColorAttributeName, value: UIColor.red, range: NSRange(location: 0, length: answer!.characters.count))
+        answerString.addAttributes(defaultAttributes, range: NSRange(location: 0, length: answer!.characters.count))
+//        answerString.addAttribute(NSForegroundColorAttributeName, value: UIColor.red, range: NSRange(location: 0, length: answer!.characters.count))
         let enteredString = NSMutableAttributedString(string: enteredWords! as String)
-        enteredString.addAttribute(NSForegroundColorAttributeName, value: UIColor.red, range: NSRange(location: 0, length: enteredWords!.characters.count))
+        enteredString.addAttributes(defaultAttributes, range: NSRange(location: 0, length: enteredWords!.characters.count))
+//        enteredString.addAttribute(NSForegroundColorAttributeName, value: UIColor.red, range: NSRange(location: 0, length: enteredWords!.characters.count))
+       
         for key in rightWords[0].keys {
             answerString.addAttribute(NSForegroundColorAttributeName, value: UIColor.black, range: NSRange(location:key,length:rightWords[0][key]!))
         }
+        
         for key in rightWords[1].keys {
             enteredString.addAttribute(NSForegroundColorAttributeName, value: UIColor.black, range: NSRange(location:key,length:rightWords[1][key]!))
         }
+        
         answerTextView.attributedText = answerString
         speechToTextTextView.attributedText = enteredString
     }
