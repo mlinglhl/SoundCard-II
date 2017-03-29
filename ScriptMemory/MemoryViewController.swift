@@ -110,7 +110,7 @@ class MemoryViewController: UIViewController, SFSpeechRecognizerDelegate {
                 if answerArray[index] == enteredWordsArray[index] {
                     var rangeStart = 0
                     if index > 0 {
-                        for rangeIndex in 0...index - 1 {
+                        for rangeIndex in 0..<index {
                             rangeStart += answerArray[rangeIndex].characters.count + 1
                         }
                     }
