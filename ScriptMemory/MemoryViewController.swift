@@ -15,7 +15,7 @@ class MemoryViewController: UIViewController, SFSpeechRecognizerDelegate {
     @IBOutlet weak var acceptAnswerButton: UIButton!
     
     @IBOutlet weak var speechToTextLeadingAnchor: NSLayoutConstraint!
-
+    
     @IBOutlet weak var questionSpeakerHeightAnchor: NSLayoutConstraint!
     
     @IBOutlet weak var questionSpeakerLabelTopAnchor: NSLayoutConstraint!
@@ -40,7 +40,7 @@ class MemoryViewController: UIViewController, SFSpeechRecognizerDelegate {
         setUp()
     }
     
-//MARK: SetUp Methods
+    //MARK: SetUp Methods
     func setUp() {
         acceptAnswerButton.setTitle(" Check answer ", for: .normal)
         answerTextView.isHidden = true
@@ -49,12 +49,12 @@ class MemoryViewController: UIViewController, SFSpeechRecognizerDelegate {
         //sets push to talk button position
         let buttonStart = acceptAnswerButton.frame.origin.x
         speechToTextLeadingAnchor.constant = buttonStart/2 - speechToTextButton.frame.width/2
-
+        
         scriptManager.startSession()
         updateLabels()
-
+        
         setUpPushToTalk()
-//        self.answerTextViewLeadingAnchor.constant = self.view.frame.width
+        //        self.answerTextViewLeadingAnchor.constant = self.view.frame.width
     }
     
     func setUpPushToTalk() {
@@ -84,7 +84,42 @@ class MemoryViewController: UIViewController, SFSpeechRecognizerDelegate {
             answerTextView.isHidden = true
             nextQuestion()
         }
+        checkAnswer()
         answerTextView.isHidden = false
+    }
+    
+    func checkAnswer() {
+        let answer = scriptManager.session.deck[scriptManager.session.cardIndex].answer
+        let rightWords = checkRightWords()
+        let answerString = NSMutableAttributedString(string: answer! as String)
+        answerString.addAttribute(NSForegroundColorAttributeName, value: UIColor.red, range: NSRange(location: 0, length: answer!.characters.count))
+        for key in rightWords.keys {
+            answerString.addAttribute(NSForegroundColorAttributeName, value: UIColor.black, range: NSRange(location:key,length:rightWords[key]!))
+        }
+        answerTextView.attributedText = answerString
+    }
+    
+    func checkRightWords() -> Dictionary <Int, Int> {
+        let enteredWords = speechToTextTextView.text
+        let answer = scriptManager.session.deck[scriptManager.session.cardIndex].answer
+        let answerArray = answer!.components(separatedBy: " ")
+        let enteredWordsArray = enteredWords!.components(separatedBy: " ")
+        var rightDictionary = Dictionary<Int, Int>()
+        for index in 0...answerArray.count {
+            if enteredWordsArray.count > index {
+                if answerArray[index] == enteredWordsArray[index] {
+                    var rangeStart = 0
+                    if index > 0 {
+                        for rangeIndex in 0...index - 1 {
+                            rangeStart += answerArray[rangeIndex].characters.count + 1
+                        }
+                    }
+                    let length = answerArray[index].characters.count
+                    rightDictionary.updateValue(length, forKey: rangeStart)
+                }
+            }
+        }
+        return rightDictionary
     }
     
     func toggleButtonState() -> Bool{
