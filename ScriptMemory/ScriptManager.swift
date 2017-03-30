@@ -149,6 +149,51 @@ extension ScriptManager {
         session.deck = cards
     }
     
+    func checkRightWords(_ enteredWords: String) -> [NSAttributedString] {
+        var answer = session.deck[session.cardIndex].answer
+        let answerArray = answer!.components(separatedBy: " ")
+        let enteredWordsArray = enteredWords.components(separatedBy: " ")
+        var rightAnswerDictionary = Dictionary<Int, Int>()
+        var rightEnteredDictionary = Dictionary<Int, Int>()
+        for index in 0...answerArray.count {
+            if answerArray.count > index && enteredWordsArray.count > index {
+                if answerArray[index].lowercased() == enteredWordsArray[index].lowercased() {
+                    var answerRangeStart = 0
+                    var enteredRangeStart = 0
+                    if index > 0 {
+                        for rangeIndex in 0..<index {
+                            answerRangeStart += answerArray[rangeIndex].characters.count + 1
+                            enteredRangeStart += enteredWordsArray[rangeIndex].characters.count + 1
+                        }
+                    }
+                    let answerLength = answerArray[index].characters.count
+                    let enteredLength = enteredWordsArray[index].characters.count
+                    rightAnswerDictionary.updateValue(answerLength, forKey: answerRangeStart)
+                    rightEnteredDictionary.updateValue(enteredLength, forKey: enteredRangeStart)
+                }
+            }
+        }
+        
+        let defaultAttributes = [
+            NSFontAttributeName: UIFont.systemFont(ofSize: 17),
+            NSForegroundColorAttributeName: UIColor.red
+        ]
+        
+        let answerString = NSMutableAttributedString(string: answer! as String)
+        answerString.addAttributes(defaultAttributes, range: NSRange(location: 0, length: answer!.characters.count))
+        let enteredString = NSMutableAttributedString(string: enteredWords as String)
+        enteredString.addAttributes(defaultAttributes, range: NSRange(location: 0, length: enteredWords.characters.count))
+        
+        for key in rightAnswerDictionary.keys {
+            answerString.addAttribute(NSForegroundColorAttributeName, value: UIColor.black, range: NSRange(location:key,length:rightAnswerDictionary[key]!))
+        }
+        
+        for key in rightEnteredDictionary.keys {
+            enteredString.addAttribute(NSForegroundColorAttributeName, value: UIColor.black, range: NSRange(location:key,length:rightEnteredDictionary[key]!))
+        }
+        return [answerString, enteredString]
+    }
+    
     func markCard(_ index: Int, isCorrect: Bool) {
         if !session.cardRecord.keys.contains(index) {
             session.cardRecord.updateValue((0, 0), forKey: index)
@@ -172,35 +217,7 @@ extension ScriptManager {
         }
         dataManager.saveContext()
     }
-    
-    //    func setUpCardFrontWithModifiedDeck(_ cardView: CardView) {
-    //        let card = session.deck[session.cardIndex]
-    //        cardView.questionSpeakerLabel.text = card.questionSpeaker ?? "No text"
-    //        cardView.questionLabel.text = card.question ?? "No text"
-    //        cardView.answerSpeakerLabel.text = card.answerSpeaker ?? "No text"
-    //        cardView.answerLabel.text = card.answer ?? "No text"
-    //    }
-    //
-    //    func setUpCardFrontWithUnmodifiedDeck(_ cardView: CardView) {
-    //        guard let card = getCurrentCard() else {
-    //            return
-    //        }
-    //        cardView.questionSpeakerLabel.text = card.questionSpeaker ?? "No text"
-    //        cardView.questionLabel.text = card.question ?? "No text"
-    //        cardView.answerSpeakerLabel.text = card.answerSpeaker ?? "No text"
-    //        cardView.answerLabel.text = card.answer ?? "No text"
-    //    }
-    //
-    //    func getCurrentCardFromDeck() -> CardObject {
-    //        let cards = session.deck
-    //        return cards[session.cardIndex]
-    //    }
-    //
-    //    func getCurrentCard() -> CardObject? {
-    //        let cards = getCardArray()
-    //        return cards?[session.cardIndex]
-    //    }
-    //
+
     func getScore() -> String {
         var correct = 0
         var wrong = 0
@@ -215,49 +232,6 @@ extension ScriptManager {
         return "Score: No cards marked"
     }
     
-    //    func getScriptArray() -> [ScriptObject]? {
-    //        if activeArray.count < setIndex + 1 {
-    //            return nil
-    //        }
-    //        return activeArray
-    //    }
-    //
-    //    func getCategoryArray() -> [CategoryObject]? {
-    //        let sets = getSetArray()
-    //        guard let currentSets = sets else {
-    //            return nil
-    //        }
-    //        let categories = currentSets[setIndex].categoryObjectsArray()
-    //        if categories.count < categoryIndex + 1 {
-    //            return nil
-    //        }
-    //        return categories
-    //    }
-    //
-    //    func getSectionArray() -> [SectionObject]? {
-    //        let categories = getCategoryArray()
-    //        guard let currentCategories = categories else {
-    //            return nil
-    //        }
-    //        let sections = currentCategories[categoryIndex].sectionObjectsArray()
-    //        if sections.count < sectionIndex + 1 {
-    //            return nil
-    //        }
-    //        return sections
-    //    }
-    //
-    //    func getCardArray() -> [CardObject]? {
-    //        let sections = getSectionArray()
-    //        guard let currentSections = sections else {
-    //            return nil
-    //        }
-    //        let cards = currentSections[sectionIndex].cardObjectsArray()
-    //        if cards.count < 1 {
-    //            return nil
-    //        }
-    //        return cards
-    //    }
-    //
     func resetDeck() {
         session.cardIndex = 0
     }
@@ -273,11 +247,5 @@ extension ScriptManager {
         }
         return false
     }
-    
-//    func nextCardSameLine() -> Bool {
-//        let cards = session.deck
-//        let card = cards[session.cardIndex]
-//        return card.sameLine
-//    }
 }
 

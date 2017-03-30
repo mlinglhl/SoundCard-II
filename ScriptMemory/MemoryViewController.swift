@@ -9,7 +9,8 @@
 import UIKit
 import Speech
 
-class MemoryViewController: UIViewController, SFSpeechRecognizerDelegate {
+class MemoryViewController: UIViewController, SFSpeechRecognizerDelegate, UIGestureRecognizerDelegate {
+    @IBOutlet weak var compareButton: UIButton!
     
     @IBOutlet weak var currentProgressView: UIProgressView!
     @IBOutlet weak var acceptAnswerButton: UIButton!
@@ -44,6 +45,8 @@ class MemoryViewController: UIViewController, SFSpeechRecognizerDelegate {
     func setUp() {
         acceptAnswerButton.setTitle(" Check answer ", for: .normal)
         answerTextView.isHidden = true
+        compareButton.isEnabled = false
+        compareButton.alpha = 0.3
         currentProgressView.progress = 0.0
         
         //sets push to talk button position
@@ -84,6 +87,8 @@ class MemoryViewController: UIViewController, SFSpeechRecognizerDelegate {
             answerTextView.isHidden = true
             speechToTextTextView.isEditable = true
             speechToTextButton.isEnabled = true
+            compareButton.isEnabled = false
+            compareButton.alpha = 0.3
             nextQuestion()
             return
         }
@@ -91,67 +96,20 @@ class MemoryViewController: UIViewController, SFSpeechRecognizerDelegate {
         answerTextView.isHidden = false
         speechToTextTextView.isEditable = false
         speechToTextButton.isEnabled = false
+        compareButton.isEnabled = true
+        compareButton.alpha = 1
     }
     
     func checkAnswer() {
-        let answer = scriptManager.session.deck[scriptManager.session.cardIndex].answer
         let enteredWords = speechToTextTextView.text
-        let rightWords = checkRightWords()
-        let defaultAttributes = [
-            NSFontAttributeName: UIFont(name: "Arial", size: 17.0)!,
-            NSForegroundColorAttributeName: UIColor.red
-        ]
-        let answerString = NSMutableAttributedString(string: answer! as String)
-        answerString.addAttributes(defaultAttributes, range: NSRange(location: 0, length: answer!.characters.count))
-//        answerString.addAttribute(NSForegroundColorAttributeName, value: UIColor.red, range: NSRange(location: 0, length: answer!.characters.count))
-        let enteredString = NSMutableAttributedString(string: enteredWords! as String)
-        enteredString.addAttributes(defaultAttributes, range: NSRange(location: 0, length: enteredWords!.characters.count))
-//        enteredString.addAttribute(NSForegroundColorAttributeName, value: UIColor.red, range: NSRange(location: 0, length: enteredWords!.characters.count))
-       
-        for key in rightWords[0].keys {
-            answerString.addAttribute(NSForegroundColorAttributeName, value: UIColor.black, range: NSRange(location:key,length:rightWords[0][key]!))
-        }
-        
-        for key in rightWords[1].keys {
-            enteredString.addAttribute(NSForegroundColorAttributeName, value: UIColor.black, range: NSRange(location:key,length:rightWords[1][key]!))
-        }
-        
-        answerTextView.attributedText = answerString
-        speechToTextTextView.attributedText = enteredString
-    }
-    
-    func checkRightWords() -> [Dictionary <Int, Int>] {
-        let enteredWords = speechToTextTextView.text
-        let answer = scriptManager.session.deck[scriptManager.session.cardIndex].answer
-        let answerArray = answer!.components(separatedBy: " ")
-        let enteredWordsArray = enteredWords!.components(separatedBy: " ")
-        var rightAnswerDictionary = Dictionary<Int, Int>()
-        var rightEnteredDictionary = Dictionary<Int, Int>()
-        for index in 0...answerArray.count {
-            if enteredWordsArray.count > index {
-                if answerArray[index] == enteredWordsArray[index] {
-                    var answerRangeStart = 0
-                    var enteredRangeStart = 0
-                    if index > 0 {
-                        for rangeIndex in 0..<index {
-                            answerRangeStart += answerArray[rangeIndex].characters.count + 1
-                            enteredRangeStart += enteredWordsArray[rangeIndex].characters.count + 1
-                        }
-                    }
-                    let answerLength = answerArray[index].characters.count
-                    let enteredLength = enteredWordsArray[index].characters.count
-                    rightAnswerDictionary.updateValue(answerLength, forKey: answerRangeStart)
-                    rightEnteredDictionary.updateValue(enteredLength, forKey: enteredRangeStart)
-                }
-            }
-        }
-        return [rightAnswerDictionary, rightEnteredDictionary]
+        let updatedStrings = scriptManager.checkRightWords(enteredWords ?? "")
+        answerTextView.attributedText = updatedStrings[0]
+        speechToTextTextView.attributedText = updatedStrings[1]
     }
     
     func toggleButtonState() -> Bool{
         if acceptAnswerButton.title(for: .normal) != " Next question " {
             acceptAnswerButton.setTitle(" Next question ", for: .normal)
-            self.answerTextViewLeadingAnchor.constant = self.speechToTextTextView.frame.origin.x
             return false
         }
         acceptAnswerButton.setTitle(" Check answer ", for: .normal)
@@ -258,4 +216,25 @@ class MemoryViewController: UIViewController, SFSpeechRecognizerDelegate {
         }
         return false
     }
+    
+//    @IBAction func moveAnswerView(_ sender: UIPanGestureRecognizer) {
+//        let translation = sender.translation(in: view)
+//        let x = translation.x
+//        var y = CGFloat(0)
+//        if translation.y > 0 {
+//            y = translation.y
+//        }
+//        answerTextView.transform = CGAffineTransform.init(translationX: x * 1.5, y: y)
+//        switch sender.state {
+//        case .began:
+//            self.answerTextView.alpha = 0.6
+//            break
+//        case .ended:
+//            answerTextView.transform = CGAffineTransform.identity
+//            answerTextView.alpha = 1
+//            break
+//        default:
+//            break
+//        }
+//    }
 }
