@@ -50,14 +50,18 @@ class MemoryViewController: UIViewController, SFSpeechRecognizerDelegate, UIGest
         currentProgressView.progress = 0.0
         
         //sets push to talk button position
-        let buttonStart = acceptAnswerButton.frame.origin.x
-        speechToTextLeadingAnchor.constant = buttonStart/2 - speechToTextButton.frame.width/2
         
         scriptManager.startSession()
         updateLabels()
         
         setUpPushToTalk()
         //        self.answerTextViewLeadingAnchor.constant = self.view.frame.width
+    }
+   
+    override func viewDidLayoutSubviews() {
+        questionScrollView.contentSize = CGSize(width: questionLabel.frame.width, height: questionLabel.frame.height + 10)
+        let buttonStart = acceptAnswerButton.frame.origin.x
+        speechToTextLeadingAnchor.constant = buttonStart/2 - speechToTextButton.frame.width/2
     }
     
     func setUpPushToTalk() {
@@ -117,14 +121,9 @@ class MemoryViewController: UIViewController, SFSpeechRecognizerDelegate, UIGest
     }
     
     func nextQuestion() {
-        answerTextViewLeadingAnchor.constant = self.view.frame.width
         scriptManager.session.cardIndex += 1
         currentProgressView.progress = Float(scriptManager.session.cardIndex) / Float(scriptManager.session.deck.count)
         updateLabels()
-    }
-    
-    override func viewDidLayoutSubviews() {
-        questionScrollView.contentSize = CGSize(width: questionLabel.frame.width, height: questionLabel.frame.height + 10)
     }
     
     @IBAction func dismissKeybord(_ sender: UITapGestureRecognizer) {
@@ -215,6 +214,14 @@ class MemoryViewController: UIViewController, SFSpeechRecognizerDelegate, UIGest
             return true
         }
         return false
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "CompareViewController" {
+            let cvc = segue.destination as! CompareViewController
+            cvc.answerData.userInput = speechToTextTextView.attributedText
+            cvc.answerData.answer = answerTextView.attributedText
+        }
     }
     
 //    @IBAction func moveAnswerView(_ sender: UIPanGestureRecognizer) {

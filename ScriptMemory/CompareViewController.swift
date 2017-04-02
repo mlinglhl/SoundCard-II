@@ -9,10 +9,24 @@
 import UIKit
 
 class CompareViewController: UIViewController, UIGestureRecognizerDelegate {
+    
+    struct AnswerData {
+        var userInput = NSAttributedString()
+        var answer = NSAttributedString()
+    }
 
+    @IBOutlet weak var userInputTextView: UITextView!
+    @IBOutlet weak var answerTextView: UITextView!
+    var answerData = AnswerData()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        answerTextView.attributedText = answerData.answer
+        answerTextView.layer.borderColor = UIColor.black.cgColor
+        answerTextView.layer.borderWidth = 3
+        userInputTextView.attributedText = answerData.userInput
+        userInputTextView.layer.borderColor = UIColor.black.cgColor
+        userInputTextView.layer.borderWidth = 3
     }
 
     override func didReceiveMemoryWarning() {
@@ -21,6 +35,7 @@ class CompareViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     @IBAction func tapGesturePressed(_ sender: UITapGestureRecognizer) {
+        print("PINEAPPLE")
         dismiss(animated: true, completion: nil)
     }
 
