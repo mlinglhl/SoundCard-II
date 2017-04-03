@@ -44,7 +44,7 @@ class SetUpTableViewController: UITableViewController {
     @IBAction func saveButtonPressed(_ sender: UIBarButtonItem) {
         let scriptManager = ScriptManager.sharedInstance
         scriptManager.settings.randomMode = randomOrderSwitch.isOn
-        scriptManager.settings.weakCardsMoreFrequentMode = increaseWeakFrequencySwitch.isOn
+        scriptManager.settings.increaseWeakFrequency = increaseWeakFrequencySwitch.isOn
         _ = navigationController?.popViewController(animated: true)
     }
 }

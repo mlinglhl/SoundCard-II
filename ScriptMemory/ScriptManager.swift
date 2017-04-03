@@ -20,7 +20,7 @@ class ScriptManager: NSObject {
     //User settings
     struct UserSettings {
         var randomMode = false
-        var weakCardsMoreFrequentMode = false
+        var increaseWeakFrequency = false
         var failedCardsAtEndMode = false
         var soundCueMode = false
     }
@@ -30,10 +30,17 @@ class ScriptManager: NSObject {
         var cardIndex = 0
         var numberCorrect = 0
         var numberWrong = 0
-        var cardRecord = [Int: (Int, Int)]()
+        var cardRecord = [Int: [CardAttempt]]()
         var deck = [CardObject]()
         var extraCardCount = 0
         var extraCards = [CardObject]()
+    }
+    
+    struct CardAttempt {
+        var rightCount = 0
+        var wrongCount = 0
+        var answer = NSAttributedString(string: "")
+        var enteredAnswer = NSAttributedString(string: "")
     }
     
     var selection = SelectedScript()
@@ -110,7 +117,7 @@ extension ScriptManager {
         session.cardIndex = 0
         var cards = getCards()
         if settings.randomMode {
-            if settings.weakCardsMoreFrequentMode {
+            if settings.increaseWeakFrequency {
                 for card in cards {
                     if card.rightCount + card.wrongCount > 0 {
                         let score = Double(card.rightCount)/Double(card.rightCount + card.wrongCount)
@@ -191,47 +198,53 @@ extension ScriptManager {
         for key in rightEnteredDictionary.keys {
             enteredString.addAttribute(NSForegroundColorAttributeName, value: UIColor.black, range: NSRange(location:key,length:rightEnteredDictionary[key]!))
         }
+        
+        markCard(rightCount: rightEnteredDictionary.keys.count, totalEnteredLength: enteredWordsArray.count, totalAnswerLength: answerArray.count, answer: answerString, enteredAnswer: enteredString)
+        
         return [answerString, enteredString]
     }
     
-    func markCard(_ index: Int, isCorrect: Bool) {
-        if !session.cardRecord.keys.contains(index) {
-            session.cardRecord.updateValue((0, 0), forKey: index)
+    func markCard(rightCount: Int, totalEnteredLength: Int, totalAnswerLength: Int, answer: NSAttributedString, enteredAnswer: NSAttributedString) {
+        let card = session.deck[session.cardIndex]
+        let index = Int(card.index)
+        var wrongCount = totalEnteredLength
+        if wrongCount < totalAnswerLength {
+            wrongCount = totalAnswerLength
         }
-        var correctAmount = session.cardRecord[index]!.0
-        var wrongAmount = session.cardRecord[index]!.1
-        let cards = session.deck
-        if isCorrect {
-            correctAmount += 1
-            session.cardRecord.updateValue((correctAmount, wrongAmount), forKey: index)
-            cards[session.cardIndex].rightCount += 1
-            dataManager.saveContext()
-            return
-        }
-        wrongAmount += 1
-        session.cardRecord.updateValue((correctAmount, wrongAmount), forKey: index)
-        cards[session.cardIndex].wrongCount += 1
-        if settings.failedCardsAtEndMode {
-            session.deck.append(cards[session.cardIndex])
-            session.extraCardCount += 1
-        }
-        dataManager.saveContext()
-    }
+        
+        wrongCount -= rightCount
 
-    func getScore() -> String {
-        var correct = 0
-        var wrong = 0
-        for index in session.cardRecord {
-            correct += index.value.0
-            wrong += index.value.1
+        card.rightCount += rightCount
+        card.wrongCount += wrongCount
+        dataManager.saveContext()
+        var cardAttempt = CardAttempt()
+        cardAttempt.rightCount = rightCount
+        cardAttempt.wrongCount = wrongCount
+        cardAttempt.answer = answer
+        cardAttempt.enteredAnswer = enteredAnswer
+        if !session.cardRecord.keys.contains(index) {
+            session.cardRecord.updateValue([CardAttempt](), forKey: index)
         }
-        if correct + wrong > 0 {
-            let score = correct * 100 / (correct + wrong)
-            return "Score: \(score)%"
-        }
-        return "Score: No cards marked"
+        print("\(cardAttempt)")
+        var cardAttemptArray = session.cardRecord[index]!
+        cardAttemptArray.append(cardAttempt)
+        session.cardRecord.updateValue(cardAttemptArray, forKey: index)
     }
     
+    //
+    //    func getScore() -> String {
+    //        var correct = 0
+    //        var wrong = 0
+    //        for index in session.cardRecord {
+    //            correct += index.value.0
+    //            wrong += index.value.1
+    //        }
+    //        if correct + wrong > 0 {
+    //            let score = correct * 100 / (correct + wrong)
+    //            return "Score: \(score)%"
+    //        }
+    //        return "Score: No cards marked"
+
     func resetDeck() {
         session.cardIndex = 0
     }
