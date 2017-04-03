@@ -24,6 +24,7 @@
 		893E756C1E83166200640065 /* MemoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893E756B1E83166200640065 /* MemoryViewController.swift */; };
 		895EDD6D1E83860F00380AAF /* RootDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895EDD6C1E83860F00380AAF /* RootDataSource.swift */; };
 		8966BE6F1E8DA10B006AE7F5 /* CompareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8966BE6E1E8DA10B006AE7F5 /* CompareViewController.swift */; };
+		8966BE711E91FEE0006AE7F5 /* SetUpTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8966BE701E91FEE0006AE7F5 /* SetUpTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +55,7 @@
 		893E756B1E83166200640065 /* MemoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoryViewController.swift; sourceTree = "<group>"; };
 		895EDD6C1E83860F00380AAF /* RootDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootDataSource.swift; sourceTree = "<group>"; };
 		8966BE6E1E8DA10B006AE7F5 /* CompareViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompareViewController.swift; sourceTree = "<group>"; };
+		8966BE701E91FEE0006AE7F5 /* SetUpTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetUpTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,13 +98,14 @@
 		893E75011E8175A800640065 /* ScriptMemory */ = {
 			isa = PBXGroup;
 			children = (
+				893E753F1E81FA0C00640065 /* ScriptManager.swift */,
 				893E75021E8175A800640065 /* AppDelegate.swift */,
 				893E75551E820FCF00640065 /* HomeTableViewController.swift */,
 				893E75611E8305FA00640065 /* DownloadManager.swift */,
 				893E75671E830AC000640065 /* DownloadViewController.swift */,
 				893E756B1E83166200640065 /* MemoryViewController.swift */,
 				8966BE6E1E8DA10B006AE7F5 /* CompareViewController.swift */,
-				893E753F1E81FA0C00640065 /* ScriptManager.swift */,
+				8966BE701E91FEE0006AE7F5 /* SetUpTableViewController.swift */,
 				895EDD6C1E83860F00380AAF /* RootDataSource.swift */,
 				893E75391E81CAB600640065 /* ScriptDataSource.swift */,
 				893E753B1E81CAC600640065 /* CharacterDataSource.swift */,
@@ -196,6 +199,7 @@
 				893E75421E81FA4400640065 /* CoreDataExtensions.swift in Sources */,
 				893E756C1E83166200640065 /* MemoryViewController.swift in Sources */,
 				893E753C1E81CAC600640065 /* CharacterDataSource.swift in Sources */,
+				8966BE711E91FEE0006AE7F5 /* SetUpTableViewController.swift in Sources */,
 				895EDD6D1E83860F00380AAF /* RootDataSource.swift in Sources */,
 				893E75561E820FCF00640065 /* HomeTableViewController.swift in Sources */,
 				893E753E1E81CAD000640065 /* SectionDataSource.swift in Sources */,
