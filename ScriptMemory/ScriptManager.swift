@@ -262,3 +262,24 @@ extension ScriptManager {
     }
 }
 
+extension ScriptManager {
+    func getQuestionForCardAtIndex(_ index: Int) -> String {
+        return getCards()[index].question ?? "No question found"
+    }
+    
+    func getSessionScoreForCardAtIndex(_ index: Int) -> String {
+        let cardIndex = Int(getCards()[index].index)
+        let attemptArray = session.cardRecord[cardIndex]
+        guard let unwrappedAttemptArray = attemptArray else {
+            return "No record found"
+        }
+        var rightCount = 0
+        var wrongCount = 0
+        for attempt in unwrappedAttemptArray {
+            rightCount += attempt.rightCount
+            wrongCount += attempt.wrongCount
+        }
+        let score = rightCount * 100 / (rightCount + wrongCount)
+        return "\(score)%"
+    }
+}

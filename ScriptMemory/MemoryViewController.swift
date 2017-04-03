@@ -87,6 +87,7 @@ class MemoryViewController: UIViewController, SFSpeechRecognizerDelegate, UIGest
     
     @IBAction func acceptAnswer(_ sender: UIButton) {
         if toggleButtonState() {
+            speechToTextTextView.textColor = UIColor.black
             speechToTextTextView.text = ""
             answerTextView.isHidden = true
             speechToTextTextView.isEditable = true
@@ -223,25 +224,4 @@ class MemoryViewController: UIViewController, SFSpeechRecognizerDelegate, UIGest
             cvc.answerData.answer = answerTextView.attributedText
         }
     }
-    
-//    @IBAction func moveAnswerView(_ sender: UIPanGestureRecognizer) {
-//        let translation = sender.translation(in: view)
-//        let x = translation.x
-//        var y = CGFloat(0)
-//        if translation.y > 0 {
-//            y = translation.y
-//        }
-//        answerTextView.transform = CGAffineTransform.init(translationX: x * 1.5, y: y)
-//        switch sender.state {
-//        case .began:
-//            self.answerTextView.alpha = 0.6
-//            break
-//        case .ended:
-//            answerTextView.transform = CGAffineTransform.identity
-//            answerTextView.alpha = 1
-//            break
-//        default:
-//            break
-//        }
-//    }
 }
