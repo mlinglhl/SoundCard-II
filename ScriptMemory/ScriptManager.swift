@@ -271,7 +271,7 @@ extension ScriptManager {
         let cardIndex = Int(getCards()[index].index)
         let attemptArray = session.cardRecord[cardIndex]
         guard let unwrappedAttemptArray = attemptArray else {
-            return "No record found"
+            return "Not done"
         }
         var rightCount = 0
         var wrongCount = 0

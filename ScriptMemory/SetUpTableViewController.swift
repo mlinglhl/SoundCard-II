@@ -22,10 +22,13 @@ class SetUpTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.section == 0 || indexPath.section == 1 {
+            return 0
+        }
         if indexPath.section == 3 {
             return increaseWeakFrequencyCellHeight
         }
-        return 25
+        return 44
     }
     
     @IBAction func randomSwitchToggled(_ sender: UISwitch) {
@@ -38,7 +41,7 @@ class SetUpTableViewController: UITableViewController {
     }
     
     func toggleCellHeight() -> CGFloat {
-        return increaseWeakFrequencyCellHeight == CGFloat(25) ? CGFloat(0) : CGFloat(25)
+        return increaseWeakFrequencyCellHeight == CGFloat(44) ? CGFloat(0) : CGFloat(44)
     }
     
     @IBAction func saveButtonPressed(_ sender: UIBarButtonItem) {

@@ -159,4 +159,23 @@ class HomeTableViewController: UITableViewController, ReloadTableProtocol, Updat
         }
     }
     
+    func customSnapshotFromView(inputView: UIView) -> UIView {
+        
+        // Make an image from the input view.
+        UIGraphicsBeginImageContextWithOptions(inputView.bounds.size, false, 0)
+        inputView.layer.render(in: UIGraphicsGetCurrentContext()!)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext();
+        
+        // Create an image view.
+        let snapshot = UIImageView(image: image)
+        snapshot.layer.masksToBounds = false
+        snapshot.layer.cornerRadius = 0.0
+        snapshot.layer.shadowOffset = CGSize(width: -5.0, height: 0.0)
+        snapshot.layer.shadowRadius = 5.0
+        snapshot.layer.shadowOpacity = 0.4
+        
+        
+        return snapshot
+    }
 }
