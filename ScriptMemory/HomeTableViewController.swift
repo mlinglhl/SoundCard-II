@@ -91,6 +91,21 @@ class HomeTableViewController: UITableViewController, ReloadTableProtocol, Updat
                 break
             }
         }
+        if indexPath.row == 0 {
+            switch indexPath.section {
+            case 0:
+                let height = cellHeight.scriptHeight > 0 ? 0 : 25
+                return CGFloat(height)
+            case 1:
+                let height = cellHeight.characterHeight > 0 ? 0 : 25
+                return CGFloat(height)
+            case 2:
+                let height = cellHeight.sectionHeight > 0 ? 0 : 25
+                return CGFloat(height)
+            default:
+                break
+            }
+        }
         return 25
     }
     

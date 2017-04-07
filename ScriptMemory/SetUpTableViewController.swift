@@ -19,6 +19,12 @@ class SetUpTableViewController: UITableViewController {
         super.viewDidLoad()
         randomOrderSwitch.transform = CGAffineTransform(scaleX: 0.75, y: 0.75)
         increaseWeakFrequencySwitch.transform = CGAffineTransform(scaleX: 0.75, y: 0.75)
+        let scriptManager = ScriptManager.sharedInstance
+        randomOrderSwitch.isOn = scriptManager.settings.randomMode
+        increaseWeakFrequencySwitch.isOn = scriptManager.settings.increaseWeakFrequency
+        if randomOrderSwitch.isOn {
+            increaseWeakFrequencyCellHeight = 44
+        }
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
