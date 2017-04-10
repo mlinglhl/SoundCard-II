@@ -25,12 +25,38 @@
                                 <cells/>
                             </tableViewSection>
                             <tableViewSection id="GuX-ch-ijO">
-                                <cells/>
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="rhO-z2-U3R">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="rhO-z2-U3R" id="6v1-AK-oGG">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Full script" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j0c-uz-G12">
+                                                    <rect key="frame" x="16" y="11" width="75" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Vro-HY-XAI">
+                                                    <rect key="frame" x="318" y="6" width="51" height="31"/>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="Vro-HY-XAI" secondAttribute="trailing" constant="8" id="GcL-QL-edx"/>
+                                                <constraint firstItem="Vro-HY-XAI" firstAttribute="centerY" secondItem="6v1-AK-oGG" secondAttribute="centerY" id="hTN-jG-GwV"/>
+                                                <constraint firstItem="j0c-uz-G12" firstAttribute="centerY" secondItem="6v1-AK-oGG" secondAttribute="centerY" id="jvU-56-ozf"/>
+                                                <constraint firstItem="j0c-uz-G12" firstAttribute="leading" secondItem="6v1-AK-oGG" secondAttribute="leadingMargin" constant="8" id="ukj-Oi-sjc"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
                             </tableViewSection>
                             <tableViewSection id="1oF-Fs-qZK">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="NAU-7P-unD">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="NAU-7P-unD" id="tb7-Cz-cY4">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
@@ -62,7 +88,7 @@
                             <tableViewSection id="55W-OO-VaV">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="d1u-tA-Q7W">
-                                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="88" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="d1u-tA-Q7W" id="ANO-Nq-XXV">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
@@ -102,6 +128,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="fullScriptSwitch" destination="Vro-HY-XAI" id="DF5-at-Zho"/>
                         <outlet property="increaseWeakFrequencySwitch" destination="yvC-X8-r48" id="ryN-Cd-USV"/>
                         <outlet property="randomOrderSwitch" destination="SUU-uG-4ue" id="WA6-Sd-Sjd"/>
                     </connections>

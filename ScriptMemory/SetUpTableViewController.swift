@@ -10,6 +10,7 @@ import UIKit
 
 class SetUpTableViewController: UITableViewController {
     
+    @IBOutlet weak var fullScriptSwitch: UISwitch!
     @IBOutlet weak var randomOrderSwitch: UISwitch!
     @IBOutlet weak var increaseWeakFrequencySwitch: UISwitch!
     
@@ -17,20 +18,22 @@ class SetUpTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        randomOrderSwitch.transform = CGAffineTransform(scaleX: 0.75, y: 0.75)
-        increaseWeakFrequencySwitch.transform = CGAffineTransform(scaleX: 0.75, y: 0.75)
-        let scriptManager = ScriptManager.sharedInstance
-        randomOrderSwitch.isOn = scriptManager.settings.randomMode
-        increaseWeakFrequencySwitch.isOn = scriptManager.settings.increaseWeakFrequency
         if randomOrderSwitch.isOn {
             increaseWeakFrequencyCellHeight = 44
         }
     }
     
+    func setUpSwitches() {
+        let scriptManager = ScriptManager.sharedInstance
+        randomOrderSwitch.transform = CGAffineTransform(scaleX: 0.75, y: 0.75)
+        randomOrderSwitch.isOn = scriptManager.settings.randomMode
+        increaseWeakFrequencySwitch.transform = CGAffineTransform(scaleX: 0.75, y: 0.75)
+        increaseWeakFrequencySwitch.isOn = scriptManager.settings.increaseWeakFrequency
+        fullScriptSwitch.transform = CGAffineTransform(scaleX: 0.75, y: 0.75)
+        fullScriptSwitch.isOn = scriptManager.settings.fullScriptMode
+    }
+    
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == 0 || indexPath.section == 1 {
-            return 0
-        }
         if indexPath.section == 3 {
             return increaseWeakFrequencyCellHeight
         }
@@ -54,6 +57,7 @@ class SetUpTableViewController: UITableViewController {
         let scriptManager = ScriptManager.sharedInstance
         scriptManager.settings.randomMode = randomOrderSwitch.isOn
         scriptManager.settings.increaseWeakFrequency = increaseWeakFrequencySwitch.isOn
+        scriptManager.settings.fullScriptMode = fullScriptSwitch.isOn
         _ = navigationController?.popViewController(animated: true)
     }
 }

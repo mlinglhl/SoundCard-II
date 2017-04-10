@@ -21,8 +21,7 @@ class ScriptManager: NSObject {
     struct UserSettings {
         var randomMode = false
         var increaseWeakFrequency = false
-        var failedCardsAtEndMode = false
-        var soundCueMode = false
+        var fullScriptMode = false
     }
     
     //Tracks progress in the current session
@@ -116,6 +115,18 @@ extension ScriptManager {
     func makeDeck() {
         session.cardIndex = 0
         var cards = getCards()
+        if settings.fullScriptMode {
+            let character = getCurrentCharacter()
+            if let character = character {
+                let sections = character.sectionObjectsArray()
+                for section in sections {
+                    let sectionCards = section.cardObjectsArray()
+                    for card in sectionCards {
+                        cards.append(card)
+                    }
+                }
+            }
+        }
         if settings.randomMode {
             if settings.increaseWeakFrequency {
                 for card in cards {
@@ -143,15 +154,15 @@ extension ScriptManager {
                         }
                     }
                 }
-                let end = cards.count
-                var tempArray = [CardObject]()
-                for _ in 0..<end {
-                    let randomNumber = Int(arc4random_uniform(UInt32(cards.count)))
-                    tempArray.append(cards[randomNumber])
-                    cards.remove(at: randomNumber)
-                }
-                cards = tempArray
             }
+            let end = cards.count
+            var tempArray = [CardObject]()
+            for _ in 0..<end {
+                let randomNumber = Int(arc4random_uniform(UInt32(cards.count)))
+                tempArray.append(cards[randomNumber])
+                cards.remove(at: randomNumber)
+            }
+            cards = tempArray
         }
         session.deck = cards
     }
@@ -213,7 +224,7 @@ extension ScriptManager {
         }
         
         wrongCount -= rightCount
-
+        
         card.rightCount += rightCount
         card.wrongCount += wrongCount
         dataManager.saveContext()
@@ -225,26 +236,11 @@ extension ScriptManager {
         if !session.cardRecord.keys.contains(index) {
             session.cardRecord.updateValue([CardAttempt](), forKey: index)
         }
-        print("\(cardAttempt)")
         var cardAttemptArray = session.cardRecord[index]!
         cardAttemptArray.append(cardAttempt)
         session.cardRecord.updateValue(cardAttemptArray, forKey: index)
     }
     
-    //
-    //    func getScore() -> String {
-    //        var correct = 0
-    //        var wrong = 0
-    //        for index in session.cardRecord {
-    //            correct += index.value.0
-    //            wrong += index.value.1
-    //        }
-    //        if correct + wrong > 0 {
-    //            let score = correct * 100 / (correct + wrong)
-    //            return "Score: \(score)%"
-    //        }
-    //        return "Score: No cards marked"
-
     func resetDeck() {
         session.cardIndex = 0
     }
@@ -262,6 +258,7 @@ extension ScriptManager {
     }
 }
 
+//MARK: Results extension
 extension ScriptManager {
     func getQuestionForCardAtIndex(_ index: Int) -> String {
         return getCards()[index].question ?? "No question found"
