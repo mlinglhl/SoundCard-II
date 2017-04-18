@@ -35,21 +35,6 @@ class CompareViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     @IBAction func tapGesturePressed(_ sender: UITapGestureRecognizer) {
-        print("PINEAPPLE")
         dismiss(animated: true, completion: nil)
     }
-
-//    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-//    }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

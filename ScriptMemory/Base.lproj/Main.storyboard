@@ -401,7 +401,7 @@
                 <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="pageCurl" navigationOrientation="horizontal" spineLocation="min" id="gcA-EI-thX" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="B3a-EV-Vfk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="365" y="770"/>
+            <point key="canvasLocation" x="2580" y="770"/>
         </scene>
         <!--Memory View Controller-->
         <scene sceneID="kXN-06-clS">
@@ -657,6 +657,7 @@
                                         <connections>
                                             <outlet property="percentLabel" destination="Tw5-bs-z9M" id="ifp-li-61y"/>
                                             <outlet property="questionLabel" destination="GGU-ZR-DR3" id="XW6-9F-C2t"/>
+                                            <segue destination="gcA-EI-thX" kind="show" id="aga-FQ-Igk"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
