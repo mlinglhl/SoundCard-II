@@ -70,7 +70,7 @@ class DownloadManager: NSObject {
         }
         let task = URLSession.shared.dataTask(with: inputURL) { (data, response, error) in
             guard let data = data else {
-                print ("No data returned from server \(error?.localizedDescription)")
+                print ("No data returned from server \(String(describing: error?.localizedDescription))")
                 return
             }
             guard let json = try? JSONSerialization.jsonObject(with: data, options: []) as! Array<Dictionary<String, String>> else {

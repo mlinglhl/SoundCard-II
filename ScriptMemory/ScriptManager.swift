@@ -30,7 +30,8 @@ class ScriptManager: NSObject {
         var numberCorrect = 0
         var numberWrong = 0
         var cardRecord = [Int: [CardAttempt]]()
-        var deck = [CardObject]()
+        var sortedDeck = [CardObject]()
+        var activeDeck = [CardObject]()
         var extraCardCount = 0
         var extraCards = [CardObject]()
     }
@@ -127,6 +128,7 @@ extension ScriptManager {
                 }
             }
         }
+        session.sortedDeck = cards
         if settings.randomMode {
             if settings.increaseWeakFrequency {
                 for card in cards {
@@ -164,11 +166,11 @@ extension ScriptManager {
             }
             cards = tempArray
         }
-        session.deck = cards
+        session.activeDeck = cards
     }
     
     func checkRightWords(_ enteredWords: String) -> [NSAttributedString] {
-        var answer = session.deck[session.cardIndex].answer
+        var answer = session.activeDeck[session.cardIndex].answer
         let answerArray = answer!.components(separatedBy: " ")
         let enteredWordsArray = enteredWords.components(separatedBy: " ")
         var rightAnswerDictionary = Dictionary<Int, Int>()
@@ -216,7 +218,7 @@ extension ScriptManager {
     }
     
     func markCard(rightCount: Int, totalEnteredLength: Int, totalAnswerLength: Int, answer: NSAttributedString, enteredAnswer: NSAttributedString) {
-        let card = session.deck[session.cardIndex]
+        let card = session.activeDeck[session.cardIndex]
         let index = Int(card.index)
         var wrongCount = totalEnteredLength
         if wrongCount < totalAnswerLength {
@@ -225,8 +227,8 @@ extension ScriptManager {
         
         wrongCount -= rightCount
         
-        card.rightCount += rightCount
-        card.wrongCount += wrongCount
+        card.rightCount += Int16(rightCount)
+        card.wrongCount += Int16(wrongCount)
         dataManager.saveContext()
         var cardAttempt = CardAttempt()
         cardAttempt.rightCount = rightCount
@@ -250,7 +252,7 @@ extension ScriptManager {
     }
     
     func checkLast() -> Bool {
-        let cards = session.deck
+        let cards = session.activeDeck
         if session.cardIndex == cards.count - 1 {
             return true
         }
@@ -261,11 +263,11 @@ extension ScriptManager {
 //MARK: Results extension
 extension ScriptManager {
     func getQuestionForCardAtIndex(_ index: Int) -> String {
-        return getCards()[index].question ?? "No question found"
+        return session.sortedDeck[index].question ?? "No question found"
     }
     
     func getSessionScoreForCardAtIndex(_ index: Int) -> String {
-        let cardIndex = Int(getCards()[index].index)
+        let cardIndex = Int(session.sortedDeck[index].index)
         let attemptArray = session.cardRecord[cardIndex]
         guard let unwrappedAttemptArray = attemptArray else {
             return "Not done"

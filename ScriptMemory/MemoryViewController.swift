@@ -123,7 +123,7 @@ class MemoryViewController: UIViewController, SFSpeechRecognizerDelegate, UIGest
     
     func nextQuestion() {
         scriptManager.session.cardIndex += 1
-        currentProgressView.progress = Float(scriptManager.session.cardIndex) / Float(scriptManager.session.deck.count)
+        currentProgressView.progress = Float(scriptManager.session.cardIndex) / Float(scriptManager.session.activeDeck.count)
         updateLabels()
     }
     
@@ -132,7 +132,7 @@ class MemoryViewController: UIViewController, SFSpeechRecognizerDelegate, UIGest
     }
     
     func updateLabels() {
-        let deck = scriptManager.session.deck
+        let deck = scriptManager.session.activeDeck
         let index = scriptManager.session.cardIndex
         if index < deck.count {
             questionSpeakerLabel.text = deck[index].questionSpeaker
