@@ -205,11 +205,11 @@ extension ScriptManager {
         enteredString.addAttributes(defaultAttributes, range: NSRange(location: 0, length: enteredWords.characters.count))
         
         for key in rightAnswerDictionary.keys {
-            answerString.addAttribute(NSForegroundColorAttributeName, value: UIColor.black, range: NSRange(location:key,length:rightAnswerDictionary[key]!))
+            answerString.addAttribute(NSForegroundColorAttributeName, value: UIColor(red: 0, green: 0.5, blue: 0, alpha: 1), range: NSRange(location:key,length:rightAnswerDictionary[key]!))
         }
         
         for key in rightEnteredDictionary.keys {
-            enteredString.addAttribute(NSForegroundColorAttributeName, value: UIColor.black, range: NSRange(location:key,length:rightEnteredDictionary[key]!))
+            enteredString.addAttribute(NSForegroundColorAttributeName, value: UIColor(red: 0, green: 0.5, blue: 0, alpha: 1), range: NSRange(location:key,length:rightEnteredDictionary[key]!))
         }
         
         markCard(rightCount: rightEnteredDictionary.keys.count, totalEnteredLength: enteredWordsArray.count, totalAnswerLength: answerArray.count, answer: answerString, enteredAnswer: enteredString)
@@ -253,7 +253,7 @@ extension ScriptManager {
     
     func checkLast() -> Bool {
         let cards = session.activeDeck
-        if session.cardIndex == cards.count - 1 {
+        if cards.count <= session.cardIndex {
             return true
         }
         return false

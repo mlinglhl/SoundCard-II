@@ -38,26 +38,28 @@ class MemoryViewController: UIViewController, SFSpeechRecognizerDelegate, UIGest
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setUp()
+        setUpSession()
+        setUpPushToTalk()
     }
     
     //MARK: SetUp Methods
-    func setUp() {
+    func setUpSession() {
+        
+        questionSpeakerLabel.text = "No question found"
+        questionLabel.text = ""
         acceptAnswerButton.setTitle(" Check answer ", for: .normal)
+        
         answerTextView.isHidden = true
         compareButton.isEnabled = false
         compareButton.alpha = 0.3
         currentProgressView.progress = 0.0
         
-        //sets push to talk button position
-        
         scriptManager.startSession()
         updateLabels()
         
-        setUpPushToTalk()
-        //        self.answerTextViewLeadingAnchor.constant = self.view.frame.width
+        checkForLastQuestion()
     }
-   
+    
     override func viewDidLayoutSubviews() {
         questionScrollView.contentSize = CGSize(width: questionLabel.frame.width, height: questionLabel.frame.height + 10)
         let buttonStart = acceptAnswerButton.frame.origin.x
@@ -85,6 +87,7 @@ class MemoryViewController: UIViewController, SFSpeechRecognizerDelegate, UIGest
         }
     }
     
+    //MARK: Answering methods
     @IBAction func acceptAnswer(_ sender: UIButton) {
         if toggleButtonState() {
             speechToTextTextView.textColor = UIColor.black
@@ -94,7 +97,7 @@ class MemoryViewController: UIViewController, SFSpeechRecognizerDelegate, UIGest
             speechToTextButton.isEnabled = true
             compareButton.isEnabled = false
             compareButton.alpha = 0.3
-            nextQuestion()
+            updateLabels()
             return
         }
         checkAnswer()
@@ -103,6 +106,9 @@ class MemoryViewController: UIViewController, SFSpeechRecognizerDelegate, UIGest
         speechToTextButton.isEnabled = false
         compareButton.isEnabled = true
         compareButton.alpha = 1
+        scriptManager.session.cardIndex += 1
+        updateProgressView()
+        checkForLastQuestion()
     }
     
     func checkAnswer() {
@@ -121,10 +127,16 @@ class MemoryViewController: UIViewController, SFSpeechRecognizerDelegate, UIGest
         return true
     }
     
-    func nextQuestion() {
-        scriptManager.session.cardIndex += 1
+    func updateProgressView() {
         currentProgressView.progress = Float(scriptManager.session.cardIndex) / Float(scriptManager.session.activeDeck.count)
-        updateLabels()
+    }
+    
+    func checkForLastQuestion() {
+        if scriptManager.checkLast() {
+            acceptAnswerButton.isEnabled = false
+            acceptAnswerButton.alpha = 0.3
+            speechToTextTextView.isEditable = false
+        }
     }
     
     @IBAction func dismissKeybord(_ sender: UITapGestureRecognizer) {
@@ -142,11 +154,15 @@ class MemoryViewController: UIViewController, SFSpeechRecognizerDelegate, UIGest
                 questionSpeakerHeightAnchor.constant = 0
                 questionSpeakerLabelTopAnchor.constant = 0
             }
-            questionLabel.text = deck[index].question
-            answerTextView.text = deck[index].answer
+            let question = deck[index].question ?? "No question found"
+            let answer = deck[index].answer ?? "No answer found"
+            let answerCount = answer.components(separatedBy: " ").count
+            questionLabel.text = "\(question) (\(answerCount) words)"
+            answerTextView.text = answer
         }
     }
     
+    //MARK: SpeechToText methods
     @IBAction func toggleSpeechToText(_ sender: UIButton) {
         toggleSpeechToText()
     }
@@ -217,6 +233,7 @@ class MemoryViewController: UIViewController, SFSpeechRecognizerDelegate, UIGest
         return false
     }
     
+    //MARK: Segue methods
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "CompareViewController" {
             let cvc = segue.destination as! CompareViewController

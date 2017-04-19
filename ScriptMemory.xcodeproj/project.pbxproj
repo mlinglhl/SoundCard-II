@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8918492B1EA7E7F00074C56B /* SingleCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8918492A1EA7E7F00074C56B /* SingleCardViewController.swift */; };
+		8918492D1EA7EB680074C56B /* FullStatsPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8918492C1EA7EB680074C56B /* FullStatsPageViewController.swift */; };
 		893E75031E8175A800640065 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893E75021E8175A800640065 /* AppDelegate.swift */; };
 		893E75081E8175A800640065 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 893E75061E8175A800640065 /* Main.storyboard */; };
 		893E750B1E8175A800640065 /* ScriptMemory.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 893E75091E8175A800640065 /* ScriptMemory.xcdatamodeld */; };
@@ -30,6 +32,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8918492A1EA7E7F00074C56B /* SingleCardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleCardViewController.swift; sourceTree = "<group>"; };
+		8918492C1EA7EB680074C56B /* FullStatsPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullStatsPageViewController.swift; sourceTree = "<group>"; };
 		893E74FF1E8175A800640065 /* ScriptMemory.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScriptMemory.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		893E75021E8175A800640065 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		893E75071E8175A800640065 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -105,6 +109,7 @@
 				893E753F1E81FA0C00640065 /* ScriptManager.swift */,
 				893E75021E8175A800640065 /* AppDelegate.swift */,
 				893E75551E820FCF00640065 /* HomeTableViewController.swift */,
+				8918492A1EA7E7F00074C56B /* SingleCardViewController.swift */,
 				893E75611E8305FA00640065 /* DownloadManager.swift */,
 				893E75671E830AC000640065 /* DownloadViewController.swift */,
 				8966BE721E92DD37006AE7F5 /* ResultsViewController.swift */,
@@ -116,6 +121,7 @@
 				893E75391E81CAB600640065 /* ScriptDataSource.swift */,
 				893E753B1E81CAC600640065 /* CharacterDataSource.swift */,
 				893E753D1E81CAD000640065 /* SectionDataSource.swift */,
+				8918492C1EA7EB680074C56B /* FullStatsPageViewController.swift */,
 				893E75061E8175A800640065 /* Main.storyboard */,
 				893E750C1E8175A800640065 /* Assets.xcassets */,
 				893E750E1E8175A800640065 /* LaunchScreen.storyboard */,
@@ -204,6 +210,7 @@
 				893E750B1E8175A800640065 /* ScriptMemory.xcdatamodeld in Sources */,
 				893E75421E81FA4400640065 /* CoreDataExtensions.swift in Sources */,
 				893E756C1E83166200640065 /* MemoryViewController.swift in Sources */,
+				8918492B1EA7E7F00074C56B /* SingleCardViewController.swift in Sources */,
 				893E753C1E81CAC600640065 /* CharacterDataSource.swift in Sources */,
 				8966BE731E92DD37006AE7F5 /* ResultsViewController.swift in Sources */,
 				8966BE751E92DD73006AE7F5 /* ResultsTableViewCell.swift in Sources */,
@@ -213,6 +220,7 @@
 				893E753E1E81CAD000640065 /* SectionDataSource.swift in Sources */,
 				893E75681E830AC000640065 /* DownloadViewController.swift in Sources */,
 				893E753A1E81CAB600640065 /* ScriptDataSource.swift in Sources */,
+				8918492D1EA7EB680074C56B /* FullStatsPageViewController.swift in Sources */,
 				893E75401E81FA0C00640065 /* ScriptManager.swift in Sources */,
 				893E75031E8175A800640065 /* AppDelegate.swift in Sources */,
 			);

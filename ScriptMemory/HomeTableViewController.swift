@@ -30,6 +30,7 @@ class HomeTableViewController: UITableViewController, ReloadTableProtocol, Updat
     @IBOutlet weak var selectedCharacterLabel: UILabel!
     @IBOutlet weak var selectedSectionLabel: UILabel!
     
+    let defaultCellHeight = 25
     let scriptManager = ScriptManager.sharedInstance
     let scriptDataSource = ScriptDataSource()
     let characterDataSource = CharacterDataSource()
@@ -65,7 +66,7 @@ class HomeTableViewController: UITableViewController, ReloadTableProtocol, Updat
     }
     
     func adjustHeight (_ height: Int, count: Int) -> Int {
-        let newHeight = 25 * count
+        let newHeight = defaultCellHeight * count
         return height == newHeight ? 0 : newHeight
     }
     
@@ -94,19 +95,19 @@ class HomeTableViewController: UITableViewController, ReloadTableProtocol, Updat
         if indexPath.row == 0 {
             switch indexPath.section {
             case 0:
-                let height = cellHeight.scriptHeight > 0 ? 0 : 25
+                let height = cellHeight.scriptHeight > 0 ? 0 : defaultCellHeight
                 return CGFloat(height)
             case 1:
-                let height = cellHeight.characterHeight > 0 ? 0 : 25
+                let height = cellHeight.characterHeight > 0 ? 0 : defaultCellHeight
                 return CGFloat(height)
             case 2:
-                let height = cellHeight.sectionHeight > 0 ? 0 : 25
+                let height = cellHeight.sectionHeight > 0 ? 0 : defaultCellHeight
                 return CGFloat(height)
             default:
                 break
             }
         }
-        return 25
+        return CGFloat(defaultCellHeight)
     }
     
     func reloadTableView() {
@@ -134,6 +135,9 @@ class HomeTableViewController: UITableViewController, ReloadTableProtocol, Updat
     func updateDataSource() {
         scriptDataSource.scriptArray = scriptManager.scriptArray
         scriptTableView.reloadData()
+        if scriptManager.scriptArray.count > 0 {
+            scriptTableView.selectRow(at: IndexPath(row: 0, section: 0), animated: false, scrollPosition: .top)
+        }
         updateCharacterDataSource()
         updateSectionDataSource()
     }
@@ -141,12 +145,28 @@ class HomeTableViewController: UITableViewController, ReloadTableProtocol, Updat
     func updateCharacterDataSource() {
         characterDataSource.characterArray = scriptManager.getCharacters()
         characterTableView.reloadData()
-        sectionTableView.reloadData()
+        
+        guard let script = scriptManager.getCurrentScript() else {
+            return
+        }
+        
+        if script.characterObjectsArray().count > 0 {
+            characterTableView.selectRow(at: IndexPath(row: 0, section: 0), animated: false, scrollPosition: .top)
+        }
+        updateSectionDataSource()
     }
     
     func updateSectionDataSource() {
         sectionDataSource.sectionArray = scriptManager.getSections()
         sectionTableView.reloadData()
+        
+        guard let character = scriptManager.getCurrentCharacter() else {
+            return
+        }
+        
+        if character.sectionObjectsArray().count > 0 {
+            sectionTableView.selectRow(at: IndexPath(row: 0, section: 0), animated: false, scrollPosition: .top)
+        }
     }
     
     func updateSectionTitles() {
