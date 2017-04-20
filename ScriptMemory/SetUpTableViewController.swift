@@ -18,6 +18,7 @@ class SetUpTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setUpSwitches()
         if randomOrderSwitch.isOn {
             increaseWeakFrequencyCellHeight = 44
         }

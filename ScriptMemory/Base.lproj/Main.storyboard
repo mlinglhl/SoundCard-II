@@ -606,6 +606,8 @@
                         <outlet property="speechToTextButton" destination="crA-rq-La6" id="bd6-cU-QmJ"/>
                         <outlet property="speechToTextLeadingAnchor" destination="ukL-8m-ibX" id="bpS-OE-iw2"/>
                         <outlet property="speechToTextTextView" destination="1gv-kr-irk" id="0P2-bY-ytZ"/>
+                        <outlet property="speechToTextTextViewBottomAnchor" destination="tBk-6v-Che" id="I2c-f1-ljA"/>
+                        <outlet property="speechToTextTextViewTopAnchor" destination="uyC-g7-J6Q" id="c5J-H9-UZl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iEW-O9-S5M" userLabel="First Responder" sceneMemberID="firstResponder"/>

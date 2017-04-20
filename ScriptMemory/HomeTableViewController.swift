@@ -25,7 +25,6 @@ class HomeTableViewController: UITableViewController, ReloadTableProtocol, Updat
         var sectionHeight = 0
     }
     
-    
     @IBOutlet weak var selectedScriptLabel: UILabel!
     @IBOutlet weak var selectedCharacterLabel: UILabel!
     @IBOutlet weak var selectedSectionLabel: UILabel!
@@ -187,30 +186,14 @@ class HomeTableViewController: UITableViewController, ReloadTableProtocol, Updat
         }
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        collapseAll()
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "DownloadViewController" {
             let dvc = segue.destination as! DownloadViewController
             dvc.homeViewController = self
         }
-    }
-    
-    func customSnapshotFromView(inputView: UIView) -> UIView {
-        
-        // Make an image from the input view.
-        UIGraphicsBeginImageContextWithOptions(inputView.bounds.size, false, 0)
-        inputView.layer.render(in: UIGraphicsGetCurrentContext()!)
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext();
-        
-        // Create an image view.
-        let snapshot = UIImageView(image: image)
-        snapshot.layer.masksToBounds = false
-        snapshot.layer.cornerRadius = 0.0
-        snapshot.layer.shadowOffset = CGSize(width: -5.0, height: 0.0)
-        snapshot.layer.shadowRadius = 5.0
-        snapshot.layer.shadowOpacity = 0.4
-        
-        
-        return snapshot
     }
 }

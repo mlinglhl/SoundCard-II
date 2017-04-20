@@ -9,7 +9,7 @@
 import UIKit
 import Speech
 
-class MemoryViewController: UIViewController, SFSpeechRecognizerDelegate, UIGestureRecognizerDelegate {
+class MemoryViewController: UIViewController, SFSpeechRecognizerDelegate, UIGestureRecognizerDelegate,  UITextViewDelegate {
     @IBOutlet weak var compareButton: UIButton!
     
     @IBOutlet weak var currentProgressView: UIProgressView!
@@ -30,6 +30,10 @@ class MemoryViewController: UIViewController, SFSpeechRecognizerDelegate, UIGest
     private var recognitionTask: SFSpeechRecognitionTask?
     private let audioEngine = AVAudioEngine()
     
+    @IBOutlet var speechToTextTextViewTopAnchor: NSLayoutConstraint!
+    var speechToTextTextViewTopAnchorKeyboardUp: NSLayoutConstraint!
+    @IBOutlet var speechToTextTextViewBottomAnchor: NSLayoutConstraint!
+    
     @IBOutlet weak var questionLabel: UILabel!
     @IBOutlet weak var questionSpeakerLabel: UILabel!
     @IBOutlet weak var questionScrollView: UIScrollView!
@@ -38,13 +42,20 @@ class MemoryViewController: UIViewController, SFSpeechRecognizerDelegate, UIGest
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setUpKeyboardResponse()
         setUpSession()
         setUpPushToTalk()
     }
     
     //MARK: SetUp Methods
+    func setUpKeyboardResponse() {
+        NotificationCenter.default.addObserver(self, selector: #selector(MemoryViewController.keyboardWillShow(notification:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(MemoryViewController.keyboardWillHide(notification:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        speechToTextTextViewTopAnchorKeyboardUp = speechToTextTextView.topAnchor.constraint(equalTo: questionSpeakerLabel.topAnchor, constant: -8)
+    }
+    
     func setUpSession() {
-        
+        speechToTextTextView.delegate = self
         questionSpeakerLabel.text = "No question found"
         questionLabel.text = ""
         acceptAnswerButton.setTitle(" Check answer ", for: .normal)
@@ -140,11 +151,35 @@ class MemoryViewController: UIViewController, SFSpeechRecognizerDelegate, UIGest
             speechToTextTextView.isEditable = false
         }
     }
-    
+
+    //MARK: Keyboard methods
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if (text == "\n") {
+            textView.resignFirstResponder()
+            return false
+        }
+        return true
+    }
+
     @IBAction func dismissKeybord(_ sender: UITapGestureRecognizer) {
         view.endEditing(true)
     }
     
+    func keyboardWillShow(notification: NSNotification) {
+        let info = notification.userInfo!
+        let keyboardFrame = (info[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+        let height = keyboardFrame.height
+        speechToTextTextViewTopAnchor.isActive = false
+        speechToTextTextViewTopAnchorKeyboardUp.isActive = true
+        speechToTextTextViewBottomAnchor.constant = height
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        speechToTextTextViewTopAnchorKeyboardUp.isActive = false
+        speechToTextTextViewTopAnchor.isActive = true
+        speechToTextTextViewBottomAnchor.constant = 8
+    }
+
     func updateLabels() {
         let deck = scriptManager.session.activeDeck
         let index = scriptManager.session.cardIndex
@@ -171,8 +206,10 @@ class MemoryViewController: UIViewController, SFSpeechRecognizerDelegate, UIGest
     
     func toggleSpeechToText() {
         if endSpeechToText() {
+            speechToTextButton.alpha = 1
             return
         }
+        speechToTextButton.alpha = 0.7
         let audioSession = AVAudioSession.sharedInstance()
         do {
             try audioSession.setCategory(AVAudioSessionCategoryRecord)
