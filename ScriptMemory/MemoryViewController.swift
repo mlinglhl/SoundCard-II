@@ -74,7 +74,7 @@ class MemoryViewController: UIViewController, SFSpeechRecognizerDelegate, UIGest
     override func viewDidLayoutSubviews() {
         questionScrollView.contentSize = CGSize(width: questionLabel.frame.width, height: questionLabel.frame.height + 10)
         let buttonStart = acceptAnswerButton.frame.origin.x
-        speechToTextLeadingAnchor.constant = buttonStart/2 - speechToTextButton.frame.width/2
+        speechToTextLeadingAnchor.constant = buttonStart/2 - speechToTextButton.frame.width
     }
     
     func setUpPushToTalk() {
@@ -101,22 +101,31 @@ class MemoryViewController: UIViewController, SFSpeechRecognizerDelegate, UIGest
     //MARK: Answering methods
     @IBAction func acceptAnswer(_ sender: UIButton) {
         if toggleButtonState() {
-            //set up next question
-            speechToTextTextView.textColor = UIColor.black
-            speechToTextTextView.text = ""
-            answerTextView.isHidden = true
-            speechToTextTextView.isEditable = true
-            speechToTextButton.isEnabled = true
-            compareButton.isEnabled = false
-            compareButton.alpha = 0.3
-            updateLabels()
+            setUpNextQuestion()
             return
         }
-        //check current answer
+        submitAnswer()
+    }
+    
+    func setUpNextQuestion() {
+        speechToTextTextView.textColor = UIColor.black
+        speechToTextTextView.text = ""
+        answerTextView.isHidden = true
+        speechToTextTextView.isEditable = true
+        speechToTextButton.isEnabled = true
+        speechToTextButton.alpha = 1
+        compareButton.isEnabled = false
+        compareButton.alpha = 0.3
+        updateLabels()
+    }
+    
+    func submitAnswer() {
+        _ = endSpeechToText()
         checkAnswer()
         answerTextView.isHidden = false
         speechToTextTextView.isEditable = false
         speechToTextButton.isEnabled = false
+        speechToTextButton.alpha = 0
         compareButton.isEnabled = true
         compareButton.alpha = 1
         scriptManager.session.cardIndex += 1
@@ -151,16 +160,18 @@ class MemoryViewController: UIViewController, SFSpeechRecognizerDelegate, UIGest
             speechToTextTextView.isEditable = false
         }
     }
-
+    
     //MARK: Keyboard methods
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if (text == "\n") {
+            _ = toggleButtonState()
+            submitAnswer()
             textView.resignFirstResponder()
             return false
         }
         return true
     }
-
+    
     @IBAction func dismissKeybord(_ sender: UITapGestureRecognizer) {
         view.endEditing(true)
     }
@@ -179,7 +190,7 @@ class MemoryViewController: UIViewController, SFSpeechRecognizerDelegate, UIGest
         speechToTextTextViewTopAnchor.isActive = true
         speechToTextTextViewBottomAnchor.constant = 8
     }
-
+    
     func updateLabels() {
         let deck = scriptManager.session.activeDeck
         let index = scriptManager.session.cardIndex
