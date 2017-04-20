@@ -90,6 +90,7 @@ class MemoryViewController: UIViewController, SFSpeechRecognizerDelegate, UIGest
     //MARK: Answering methods
     @IBAction func acceptAnswer(_ sender: UIButton) {
         if toggleButtonState() {
+            //set up next question
             speechToTextTextView.textColor = UIColor.black
             speechToTextTextView.text = ""
             answerTextView.isHidden = true
@@ -100,6 +101,7 @@ class MemoryViewController: UIViewController, SFSpeechRecognizerDelegate, UIGest
             updateLabels()
             return
         }
+        //check current answer
         checkAnswer()
         answerTextView.isHidden = false
         speechToTextTextView.isEditable = false
